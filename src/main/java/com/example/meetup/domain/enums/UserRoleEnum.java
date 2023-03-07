@@ -1,5 +1,5 @@
 package com.example.meetup.domain.enums;
 
-public enum UserRoleEnums {
+public enum UserRoleEnum {
     MODERATOR, ADMIN
 }

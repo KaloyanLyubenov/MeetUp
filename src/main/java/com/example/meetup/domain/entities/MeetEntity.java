@@ -14,7 +14,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "meets")
-public class Meet extends BaseEntity{
+public class MeetEntity extends BaseEntity{
 
     @Column(name = "meet_title", nullable = false)
     private String meetTitle;

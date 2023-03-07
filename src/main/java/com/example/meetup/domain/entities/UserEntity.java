@@ -1,10 +1,7 @@
 package com.example.meetup.domain.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
@@ -13,6 +10,7 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
+@Builder
 @Table(name = "users")
 public class UserEntity extends BaseEntity{
 
@@ -32,10 +30,10 @@ public class UserEntity extends BaseEntity{
     private String lastName;
 
     @OneToMany
-    private List<Meet> announcedMeets;
+    private List<MeetEntity> announcedMeets;
 
     @ManyToMany
-    private List<UserRole> roles;
+    private List<UserRoleEntity> roles;
 
 
 }

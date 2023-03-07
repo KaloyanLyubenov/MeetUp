@@ -1,6 +1,6 @@
 package com.example.meetup.domain.entities;
 
-import com.example.meetup.domain.enums.UserRoleEnums;
+import com.example.meetup.domain.enums.UserRoleEnum;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -15,9 +15,9 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "user_roles")
-public class UserRole extends BaseEntity{
+public class UserRoleEntity extends BaseEntity{
 
     @Column(name = "user_role")
-    private UserRoleEnums userRole;
+    private UserRoleEnum userRole;
 
 }
