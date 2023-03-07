@@ -26,9 +26,9 @@ public class SecurityConfiguration {
                     // the URL-s below are available for all users - logged in and anonymous
                     requestMatchers("/", "/users/login", "/users/register", "/users/login-error").permitAll().
                     // only for moderators
-                    requestMatchers("/panel/moderator").hasRole(UserRoleEnum.MODERATOR.name()).
+                    requestMatchers("/pages/moderator").hasRole(UserRoleEnum.MODERATOR.name()).
                     // only for admins
-                    requestMatchers("/panel/admin").hasRole((UserRoleEnum.ADMIN.name())).
+                    requestMatchers("/pages/admin").hasRole((UserRoleEnum.ADMIN.name())).
                 anyRequest().authenticated().
                     and().
                         // configure login with HTML form
@@ -38,9 +38,10 @@ public class SecurityConfiguration {
                             usernameParameter(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_USERNAME_KEY).
                             passwordParameter(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_PASSWORD_KEY).
                             // where do we go after login
-                            defaultSuccessUrl("/home").
-                            failureForwardUrl("users/login-error").
-                    and().logout().logoutUrl("/users/logout").
+                            defaultSuccessUrl("/", true).
+                            failureForwardUrl("/users/login-error").
+                    and().logout().
+                        logoutUrl("/users/logout").
                         logoutSuccessUrl("/").
                         invalidateHttpSession(true);
 

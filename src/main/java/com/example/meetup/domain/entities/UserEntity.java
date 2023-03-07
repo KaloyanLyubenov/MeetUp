@@ -32,7 +32,7 @@ public class UserEntity extends BaseEntity{
     @OneToMany
     private List<MeetEntity> announcedMeets;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<UserRoleEntity> roles;
 
 

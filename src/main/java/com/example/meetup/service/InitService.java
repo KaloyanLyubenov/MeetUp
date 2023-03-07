@@ -1,6 +1,5 @@
 package com.example.meetup.service;
 
-import com.example.meetup.domain.entities.MeetEntity;
 import com.example.meetup.domain.entities.UserEntity;
 import com.example.meetup.domain.entities.UserRoleEntity;
 import com.example.meetup.domain.enums.UserRoleEnum;
@@ -20,7 +19,7 @@ public class InitService {
     private final UserRoleRepository userRoleRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public InitService(UserRepository userRepository, UserRoleRepository userRoleRepository, PasswordEncoder passwordEncoder, @Value("${app.default.password}") String defaultPassword) {
+    public InitService(UserRepository userRepository, UserRoleRepository userRoleRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.userRoleRepository = userRoleRepository;
         this.passwordEncoder = passwordEncoder;
