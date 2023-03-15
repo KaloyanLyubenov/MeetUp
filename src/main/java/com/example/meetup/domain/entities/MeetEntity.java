@@ -8,6 +8,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Date;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -24,6 +26,12 @@ public class MeetEntity extends BaseEntity{
 
     @Enumerated(EnumType.STRING)
     private VehicleTypeEnum vehicleType;
+
+    @Column
+    private String description;
+
+    @Column
+    private Date date;
 
     @ManyToOne
     private UserEntity announcer;

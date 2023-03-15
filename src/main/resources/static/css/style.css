@@ -56,3 +56,8 @@ form.main-form {
 .logged-user {
     color: white;
 }
+
+.jumbotron{
+    background-color: rgba(0,0,0,0.1);
+    min-height: 90vh;
+}

@@ -15,6 +15,10 @@
                     <!-- Logged users, no mather of the roles -->
                     <a class="nav-link" th:href="@{/pages/all}">All users</a>
                 </li>
+                <li class="nav-item" sec:authorize="isAuthenticated()">
+                    <!-- Logged users, no mather of the roles -->
+                    <a class="nav-link" th:href="@{/meets/add}">Add a meet</a>
+                </li>
                 <li class="nav-item" sec:authorize="hasRole('MODERATOR')">
                     <a class="nav-link" th:href="@{/pages/moderators}">Moderators</a>
                 </li>

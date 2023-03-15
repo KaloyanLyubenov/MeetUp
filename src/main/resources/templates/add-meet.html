@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head::head}"></head>
+
+
+<body>
+
+<div th:replace="~{fragments/navbar :: navbar}">
+  Navbar
+</div>
+
+<div class="jumbotron">
+  <div class="container text-light ">
+    <h1 class="display-3 ">
+      <strong class="bg-blur rounded border-white pl-3 font-weight-bold">Announce a meet</strong></h1>
+  </div>
+
+  <div class="container bg-blur rounded p-5 mt-5 w-75">
+    <form th:action="@{/meets/add}"
+          th:method="POST"
+          class=" text-center text-light">
+    <!--th:object="${addMeetModel}"-->
+
+      <div class="form-group row">
+        <label for="meetTitle" class="col-sm-2 col-form-label">Title</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control"
+                 id="meetTitle"
+                 name="meetTitle"
+                 aria-describedby="nameHelpInline" placeholder="Title">
+          <!--th:value="*{meetTitle}"
+          <small th:if="${#fields.hasErrors('meetTitle')}"
+                 id="titleHelpInline" class="bg-danger text-light rounded">
+            Title must be between 2 and 20 characters.
+          </small>-->
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="meetType" class="col-sm-2 col-form-label">Regularity</label>
+        <div class="col-sm-10">
+          <select
+                  id="meetType"
+                  name="meetType"
+                  class="custom-select"
+                  aria-describedby="meetTypeHelpInline">
+            <option value="" selected>Meet Type</option>
+            <option th:each="type : ${T(com.example.meetup.domain.enums.MeetTypeEnum).values()}"
+                    th:value="${type}" th:text="${type}">
+            </option>
+          </select>
+          <!--<small th:if="${#fields.hasErrors('meetType')}"
+                 id="meetTypeHelpInline" class="bg-danger text-light rounded">
+            You must select the category.
+          </small>-->
+        </div>
+      </div>
+
+      <div class="form-group row">
+          <label for="vehicleType" class="col-sm-2 col-form-label">Type of Vehicles</label>
+        <div class="col-sm-10">
+          <select
+                  id="vehicleType"
+                  name="vehicleType"
+                  class="custom-select"
+                  aria-describedby="vehicleTypeHelpInline">
+            <option value="" selected>Vehicle Type</option>
+            <option th:each="type : ${T(com.example.meetup.domain.enums.VehicleTypeEnum).values()}"
+                    th:value="${type}" th:text="${type}">
+            </option>
+          </select>
+          <!--<small th:if="${#fields.hasErrors('vehicleType')}"
+                 id="vehicleTypeHelpInline" class="bg-danger text-light rounded">
+            You must select the category.
+          </small>-->
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="description" class="col-sm-2 col-form-label">Description</label>
+        <div class="col-sm-10">
+                    <textarea name="description"
+                              required minlength="5"
+                              id="description"
+                              class="form-control"
+                              aria-describedby="descriptionError"></textarea>
+          <!--th:value="*{description}"
+          <small id="descriptionError"
+                 class="invalid-feedback  form-text bg-danger rounded">Description length must be more than 5
+            characters</small>-->
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="date" class="col-sm-2 col-form-label">Date</label>
+        <div class="col-sm-10">
+          <input type="datetime-local" class="form-control" id="date" name="date"
+                 aria-describedby="dateHelpInline">
+                 <!--th:value="*{date}"
+          <small th:if="${#fields.hasErrors('date')}" id="dateTimeHelpInline" class="bg-danger text-light rounded">
+            Start date should be in the future.
+          </small>-->
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-danger w-50">Add the new Ship</button>
+    </form>
+  </div>
+</div>
+
+<div>
+  <footer></footer>
+</div>
+</body>
+</html>
