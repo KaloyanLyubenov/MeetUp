@@ -22,7 +22,8 @@ public class ApplicationUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.
+        return
+                userRepository.
                 findUserEntityByUsername(username).
                 map(this::map).
                 orElseThrow(() -> new UsernameNotFoundException("Username with name "+ username + " was not found!"));
@@ -37,7 +38,11 @@ public class ApplicationUserDetailsService implements UserDetailsService {
     }
 
     private List<GrantedAuthority> extractAuthorities(UserEntity userEntity){
-        return userEntity.getRoles().stream().map(this::mapRole).toList();
+        return userEntity.
+                getRoles().
+                stream().
+                map(this::mapRole).
+                toList();
     }
 
     private GrantedAuthority mapRole(UserRoleEntity userRole){

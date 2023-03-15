@@ -6,6 +6,7 @@ import com.example.meetup.domain.enums.UserRoleEnum;
 import com.example.meetup.repository.UserRepository;
 import com.example.meetup.repository.UserRoleRepository;
 import jakarta.annotation.PostConstruct;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,7 @@ public class InitService {
     private final UserRoleRepository userRoleRepository;
     private final PasswordEncoder passwordEncoder;
 
+    @Autowired
     public InitService(UserRepository userRepository, UserRoleRepository userRoleRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.userRoleRepository = userRoleRepository;
@@ -32,9 +34,9 @@ public class InitService {
     }
 
     private void initRoles() {
-        if(userRepository.count() == 0){
-            UserRoleEntity moderatorRole = new UserRoleEntity(UserRoleEnum.MODERATOR);
-            UserRoleEntity adminRole = new UserRoleEntity(UserRoleEnum.ADMIN);
+        if(userRoleRepository.count() == 0){
+            var moderatorRole = new UserRoleEntity(UserRoleEnum.MODERATOR);
+            var adminRole = new UserRoleEntity(UserRoleEnum.ADMIN);
 
             userRoleRepository.save(moderatorRole);
             userRoleRepository.save(adminRole);
@@ -50,40 +52,38 @@ public class InitService {
     }
 
     private void initAdmin(){
-        UserEntity adminUser = new UserEntity("admin",
-                passwordEncoder.encode("topsecret"),
-                "admin@example.com",
-                "admin",
-                "admin",
-                null,
-                userRoleRepository.findAll());
-
+        var adminUser = new UserEntity()
+                .setUsername("admin")
+                .setPassword(passwordEncoder.encode("topsecret"))
+                .setEmail("admin@example.com")
+                .setFirstName("admin")
+                .setLastName("admin")
+                .setRoles(userRoleRepository.findAll());
         userRepository.save(adminUser);
     }
 
     private void initModerator(){
-        UserRoleEntity moderatorRole = userRoleRepository.
+        var moderatorRole = userRoleRepository.
                 findUserRoleEntitiesByUserRole(UserRoleEnum.MODERATOR).orElseThrow();
 
-        UserEntity moderatorUser = new UserEntity("moderator",
-                passwordEncoder.encode("topsecret"),
-                "mod@example.com",
-                "mod",
-                "mod",
-                null,
-                List.of(moderatorRole));
+        var moderatorUser = new UserEntity()
+                .setUsername("moderator")
+                .setPassword(passwordEncoder.encode("topsecret"))
+                .setEmail("mod@example.com")
+                .setFirstName("mod")
+                .setLastName("mod")
+                .setRoles(List.of(moderatorRole));
 
         userRepository.save(moderatorUser);
     }
 
     private void initNormalUser(){
-        UserEntity moderatorUser = new UserEntity("user",
-                passwordEncoder.encode("topsecret"),
-                "user@example.com",
-                "Normal",
-                "user",
-                null,
-                null);
+        UserEntity moderatorUser = new UserEntity()
+                .setUsername("user")
+                .setPassword(passwordEncoder.encode("topsecret"))
+                .setEmail("user@example.com")
+                .setFirstName("user")
+                .setLastName("user");
 
         userRepository.save(moderatorUser);
     }
