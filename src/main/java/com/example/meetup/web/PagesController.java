@@ -25,9 +25,4 @@ public class PagesController {
     public String moderators() {
         return "moderators";
     }
-
-    @GetMapping("/meets/add")
-    public String addMeet() {
-        return "add-meet";
-    }
 }

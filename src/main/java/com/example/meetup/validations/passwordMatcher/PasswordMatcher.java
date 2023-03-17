@@ -1,6 +1,6 @@
 package com.example.meetup.validations.passwordMatcher;
 
-import com.example.meetup.domain.dto.UserRegisterModel;
+import com.example.meetup.domain.dto.binding.UserRegisterModel;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 

@@ -1,7 +1,7 @@
 package com.example.meetup.web;
 
-import com.example.meetup.domain.dto.UserRegisterModel;
-import com.example.meetup.service.AuthService;
+import com.example.meetup.domain.dto.binding.UserRegisterModel;
+import com.example.meetup.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,12 +16,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class RegisterController{
 
-    private final AuthService authService;
+    private final UserService userService;
     private final SecurityContextRepository securityContextRepository;
 
     @Autowired
-    public RegisterController(AuthService authService, SecurityContextRepository securityContextRepository) {
-        this.authService = authService;
+    public RegisterController(UserService userService, SecurityContextRepository securityContextRepository) {
+        this.userService = userService;
         this.securityContextRepository = securityContextRepository;
     }
 
@@ -35,7 +35,7 @@ public class RegisterController{
                                HttpServletRequest request,
                                HttpServletResponse response) {
 
-        authService.registerUser(userRegisterModel, successfulAuth -> {
+        userService.registerUser(userRegisterModel, successfulAuth -> {
             SecurityContextHolderStrategy strategy = SecurityContextHolder.getContextHolderStrategy();
 
             SecurityContext context = strategy.createEmptyContext();

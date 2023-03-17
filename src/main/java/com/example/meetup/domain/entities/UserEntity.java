@@ -28,7 +28,7 @@ public class UserEntity extends BaseEntity{
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     private List<MeetEntity> announcedMeets = new ArrayList<>();
 
     @ManyToMany(fetch = FetchType.EAGER)

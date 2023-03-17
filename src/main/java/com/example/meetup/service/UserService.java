@@ -1,6 +1,7 @@
 package com.example.meetup.service;
 
-import com.example.meetup.domain.dto.UserRegisterModel;
+import com.example.meetup.domain.dto.UserModel;
+import com.example.meetup.domain.dto.binding.UserRegisterModel;
 import com.example.meetup.domain.entities.UserEntity;
 import com.example.meetup.repository.UserRepository;
 import org.modelmapper.ModelMapper;
@@ -15,18 +16,22 @@ import org.springframework.stereotype.Service;
 import java.util.function.Consumer;
 
 @Service
-public class AuthService {
+public class UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final UserDetailsService userDetailsService;
 
-    @Autowired
-    public AuthService(UserRepository userRepository, PasswordEncoder passwordEncoder, UserDetailsService userDetailsService) {
-        this.userRepository = userRepository;
+    private final ModelMapper modelMapper;
 
+    @Autowired
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, UserDetailsService userDetailsService, ModelMapper modelMapper) {
+
+        this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.userDetailsService = userDetailsService;
+
+        this.modelMapper = modelMapper;
     }
 
     public void registerUser(UserRegisterModel userRegisterModel,
@@ -51,6 +56,10 @@ public class AuthService {
 
         successfulLoginProcessor.accept(authentication);
 
+    }
+
+    public UserModel getUserByUsername(String username){
+        return this.modelMapper.map(this.userRepository.findUserEntityByUsername(username).orElse(new UserEntity()), UserModel.class);
     }
 
 }

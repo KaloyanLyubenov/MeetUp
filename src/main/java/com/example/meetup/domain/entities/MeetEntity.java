@@ -13,7 +13,6 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-@Setter
 @Entity
 @Table(name = "meets")
 public class MeetEntity extends BaseEntity{
@@ -21,11 +20,11 @@ public class MeetEntity extends BaseEntity{
     @Column(name = "meet_title", nullable = false)
     private String meetTitle;
 
-    @Enumerated(EnumType.STRING)
-    private MeetTypeEnum meetType;
+    @ManyToOne
+    private MeetTypeEntity meetType;
 
-    @Enumerated(EnumType.STRING)
-    private VehicleTypeEnum vehicleType;
+    @ManyToOne
+    private VehicleTypeEntity vehicleType;
 
     @Column
     private String description;
@@ -36,4 +35,33 @@ public class MeetEntity extends BaseEntity{
     @ManyToOne
     private UserEntity announcer;
 
+    public MeetEntity setMeetTitle(String meetTitle) {
+        this.meetTitle = meetTitle;
+        return this;
+    }
+
+    public MeetEntity setMeetType(MeetTypeEntity meetType) {
+        this.meetType = meetType;
+        return this;
+    }
+
+    public MeetEntity setVehicleType(VehicleTypeEntity vehicleType) {
+        this.vehicleType = vehicleType;
+        return this;
+    }
+
+    public MeetEntity setDescription(String description) {
+        this.description = description;
+        return this;
+    }
+
+    public MeetEntity setDate(Date date) {
+        this.date = date;
+        return this;
+    }
+
+    public MeetEntity setAnnouncer(UserEntity announcer) {
+        this.announcer = announcer;
+        return this;
+    }
 }

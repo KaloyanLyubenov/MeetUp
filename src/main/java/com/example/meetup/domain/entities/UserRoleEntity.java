@@ -10,10 +10,10 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "user_roles")
+@Table(name = "roles")
 public class UserRoleEntity extends BaseEntity{
 
-    @Column(name = "user_role")
+    @Column(name = "role")
     @Enumerated(EnumType.STRING)
     private UserRoleEnum userRole;
 

@@ -1,10 +1,7 @@
-package com.example.meetup.domain.dto;
+package com.example.meetup.domain.dto.binding;
 
 import com.example.meetup.domain.entities.BaseEntity;
 import com.example.meetup.validations.passwordMatcher.PasswordMatch;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
