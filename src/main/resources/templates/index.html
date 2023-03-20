@@ -1,28 +1,135 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
-    <head th:replace="~{fragments/head::head}"></head>
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
+<head th:replace="~{fragments/navbar :: head}"></head>
 
-    <body>
+<body>
 
-        <div th:replace="~{fragments/navbar :: navbar}">
-            Navbar
+<div id="js-preloader" class="js-preloader">
+    <div class="preloader-inner">
+        <span class="dot"></span>
+        <div class="dots">
+            <span></span>
+            <span></span>
+            <span></span>
         </div>
+    </div>
+</div>
 
-        <section class="road" th:each="r : ${meets}" th:object="${e}">
-            <img th:src="*{thumbnailUrl}" alt="Title image">
-            <div>
-                <h2 th:text="*{name}">Your Route</h2>
-                <p th:text="*{description}">Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae alias reiciendis deleniti possimus nemo
-                    non repellendus?
-                    Quae atque vero modi quidem! Autem cupiditate fugit doloribus ad amet, asperiores provident commodi.</p>
-                <a th:href="@{/meets/details/{id}(id=*{id})}" class="btn">Learn More</a>
+<header th:replace="~{fragments/navbar :: navbar}"></header>
+<!-- ***** Header Area End ***** -->
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="page-content">
+
+                <!-- ***** Banner Start ***** -->
+                <div class="main-banner">
+                    <div class="row">
+                        <div class="col-lg-7">
+                            <div class="header-text">
+                                <h6>Welcome To MeetUp</h6>
+                                <h4><em>Check</em> All Upcoming Meets</h4>
+                                <div class="main-button">
+                                    <a th:href="@{/meets/all}">Browse Now</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- ***** Banner End ***** -->
+
+                <!-- ***** Most Popular Start ***** -->
+                <div class="most-popular">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="heading-section">
+                                <h4><em>Most Popular</em> Right Now</h4>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-3 col-sm-6">
+                                    <div class="item">
+                                        <img th:src="@{/images/popular-01.jpg}" alt="">
+                                        <h4>Fortnite<br><span>Sandbox</span></h4>
+                                        <ul>
+                                            <li><i class="fa fa-star"></i> 4.8</li>
+                                            <li><i class="fa fa-download"></i> 2.3M</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-sm-6">
+                                    <div class="item">
+                                        <img th:src="@{/images/popular-02.jpg}" alt="">
+                                        <h4>PubG<br><span>Battle S</span></h4>
+                                        <ul>
+                                            <li><i class="fa fa-star"></i> 4.8</li>
+                                            <li><i class="fa fa-download"></i> 2.3M</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-sm-6">
+                                    <div class="item">
+                                        <img th:src="@{/images/popular-03.jpg}" alt="">
+                                        <h4>Dota2<br><span>Steam-X</span></h4>
+                                        <ul>
+                                            <li><i class="fa fa-star"></i> 4.8</li>
+                                            <li><i class="fa fa-download"></i> 2.3M</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-sm-6">
+                                    <div class="item">
+                                        <img th:src="@{/images/popular-04.jpg}" alt="">
+                                        <h4>CS-GO<br><span>Legendary</span></h4>
+                                        <ul>
+                                            <li><i class="fa fa-star"></i> 4.8</li>
+                                            <li><i class="fa fa-download"></i> 2.3M</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="main-button">
+                                        <a th:href="@{/meets/all}">Discover Popular</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- ***** Most Popular End ***** -->
             </div>
-        </section>
-
-        <div>
-            <footer></footer>
         </div>
-    </body>
+    </div>
+</div>
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <p>Copyright © 2036 <a href="#">Cyborg Gaming</a> Company. All rights reserved.
+
+                    <br>Design: <a href="https://templatemo.com" target="_blank" title="free CSS templates">TemplateMo</a>  Distributed By <a href="https://themewagon.com" target="_blank" >ThemeWagon</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+<!-- Scripts -->
+<!-- Bootstrap core JavaScript -->
+<script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+<script th:src="@{/vendor/bootstrap/js/bootstrap.min.js}"></script>
+
+<script th:src="@{/js/isotope.min.js}"></script>
+<script th:src="@{/js/owl-carousel.js}"></script>
+<script th:src="@{/tabs.js}"></script>
+<script th:src="@{/js/popup.js}"></script>
+<script th:src="@{/js/custom.js}"></script>
+
+
+</body>
+
 </html>

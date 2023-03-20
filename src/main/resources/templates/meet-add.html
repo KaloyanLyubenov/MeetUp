@@ -20,6 +20,7 @@
     <form th:action="@{/meets/add}"
           th:method="POST"
           th:object="${addMeetModel}"
+          enctype="multipart/form-data"
           class=" text-center text-light">
 
       <div class="form-group row">
@@ -91,6 +92,17 @@
             characters</small>
         </div>
       </div>
+
+
+      <div class="form-group col-md-6 mb-3">
+        <label for="image" class="text-white font-weight-bold">Profile Picture</label>
+        <input type="file"
+               name="image"
+               required
+               class="form-control"
+               id="image"/>
+      </div>
+
 
       <div class="form-group row">
         <label for="date" class="col-sm-2 col-form-label">Date</label>

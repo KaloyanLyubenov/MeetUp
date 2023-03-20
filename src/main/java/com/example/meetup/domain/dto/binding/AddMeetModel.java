@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
 
@@ -34,6 +35,12 @@ public class AddMeetModel {
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private Date date;
 
+    private MultipartFile image;
+
+    public AddMeetModel setImage(MultipartFile image) {
+        this.image = image;
+        return this;
+    }
 
     public AddMeetModel setMeetTitle(String meetTitle) {
         this.meetTitle = meetTitle;

@@ -5,52 +5,48 @@
 <head></head>
 <body>
 
-<div th:fragment="navbar">
+<header class="header-area header-sticky" th:fragment="navbar">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <nav class="main-nav">
+                    <!-- ***** Logo Start ***** -->
+                    <a th:href="@{/}" class="logo">
+                        <img th:src="@{/images/logo.png}" alt="">
+                    </a>
+                    <!-- ***** Logo End ***** -->
 
-    <nav class="navbar navbar-expand-lg bg-dark navbar-dark fixed-top">
+                    <!-- ***** Menu Start ***** -->
+                    <ul class="nav">
+                        <li><a th:href="@{/}" class="active">Home</a></li>
+                        <li><a th:href="@{/meets/all}">All meets</a></li>
+                        <li><a th:href="@{/meets/add}" sec:authorize="isAuthenticated()">Add a meet</a></li>
+                        <li><a th:href="@{/pages/moderators}" sec:authorize="hasRole('MODERATOR')">Moderators</a></li>
+                        <li><a th:href="@{/pages/admins}" sec:authorize="hasRole('ADMIN')">Admins</a></li>
+                        <li><a th:href="@{/users/login}" sec:authorize="!isAuthenticated()">Login</a></li>
+                        <li><a th:href="@{/users/register}" sec:authorize="!isAuthenticated()">Register</a></li>
+                        <li><a th:href="@{/users/logout}" sec:authorize="isAuthenticated()">Logout</a></li>
+                        <li><a href="profile.html" sec:authorize="isAuthenticated()"><th:block sec:authentication="principal.username"></th:block><img th:src="@{/images/profile-header.jpg}" alt=""></a></li>
+                    </ul>
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto col-12 justify-content-between">
-                <li class="nav-item" sec:authorize="isAuthenticated()">
-                    <!-- Logged users, no mather of the roles -->
-                    <a class="nav-link" th:href="@{/meets/all}">All meets</a>
-                </li>
-                <li class="nav-item" sec:authorize="isAuthenticated()">
-                    <!-- Logged users, no mather of the roles -->
-                    <a class="nav-link" th:href="@{/meets/add}">Add a meet</a>
-                </li>
-                <li class="nav-item" sec:authorize="hasRole('MODERATOR')">
-                    <a class="nav-link" th:href="@{/pages/moderators}">Moderators</a>
-                </li>
-                <li class="nav-item" sec:authorize="hasRole('ADMIN')">
-                    <a class="nav-link" th:href="@{/pages/admins}">Admins</a>
-                </li>
-
-                <!-- Logout start -->
-                <li class="nav-item" sec:authorize="isAuthenticated()">
-                    <div class="form-inline my-2 my-lg-0 px-3">
-                        <div class="text-white">Welcome, <th:block sec:authentication="principal.username"></th:block></div>
-                        <form
-                                th:method="post"
-                                th:action="@{/users/logout}">
-                            <input class="btn btn-link nav-link" type="submit" value="Logout">
-                        </form>
-                    </div>
-                </li>
-                <!-- EO: Logout start -->
-
-                <li class="nav-item" sec:authorize="!isAuthenticated()">
-                    <a class="nav-link" th:href="@{/users/register}">Register</a>
-                </li>
-                <li class="nav-item" sec:authorize="!isAuthenticated()">
-                    <a class="nav-link" th:href="@{/users/login}">Login</a>
-                </li>
-
-            </ul>
+                    <a class='menu-trigger'>
+                        <span>Menu</span>
+                    </a>
+                    <!-- ***** Menu End ***** -->
+                </nav>
+            </div>
         </div>
-    </nav>
+    </div>
+</header>
 
-</div>
+<script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+<script th:src="@{/vendor/bootstrap/js/bootstrap.min.js}"></script>
+
+<script th:src="@{/js/isotope.min.js}"></script>
+<script th:src="@{/js/owl-carousel.js}"></script>
+<script th:src="@{/tabs.js}"></script>
+<script th:src="@{/js/popup.js}"></script>
+<script th:src="@{/js/custom.js}"></script>
 
 </body>
 </html>

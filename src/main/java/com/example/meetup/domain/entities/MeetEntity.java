@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -33,8 +34,8 @@ public class MeetEntity extends BaseEntity{
     @ManyToOne
     private UserEntity announcer;
 
-    @OneToMany(fetch = FetchType.EAGER)
-    private List<PictureEntity> pictures;
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<PictureEntity> pictures = new ArrayList<>();
 
     public MeetEntity setPictures(List<PictureEntity> pictures) {
         this.pictures = pictures;
@@ -69,5 +70,9 @@ public class MeetEntity extends BaseEntity{
     public MeetEntity setAnnouncer(UserEntity announcer) {
         this.announcer = announcer;
         return this;
+    }
+
+    public void addPicture(PictureEntity picture){
+        this.pictures.add(picture);
     }
 }

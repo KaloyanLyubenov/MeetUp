@@ -7,6 +7,7 @@ import com.example.meetup.domain.dto.VehicleTypeModel;
 import com.example.meetup.domain.dto.binding.AddMeetModel;
 import com.example.meetup.domain.dto.views.MeetIndexView;
 import com.example.meetup.domain.entities.MeetEntity;
+import com.example.meetup.domain.entities.PictureEntity;
 import com.example.meetup.domain.enums.MeetTypeEnum;
 import com.example.meetup.domain.enums.VehicleTypeEnum;
 import com.example.meetup.repository.MeetRepository;
@@ -27,19 +28,22 @@ public class MeetService {
     private final MeetRepository meetRepository;
     private final VehicleTypeService vehicleTypeService;
     private final ModelMapper modelMapper;
+    private final ImageCloudService imageCloudService;
 
     @Autowired
     public MeetService(UserService userService,
                        MeetTypeService meetTypeService,
                        MeetRepository meetRepository,
                        VehicleTypeService vehicleTypeService,
-                       ModelMapper modelMapper)
+                       ModelMapper modelMapper, ImageCloudService imageCloudService)
     {
         this.userService = userService;
         this.meetTypeService = meetTypeService;
         this.meetRepository = meetRepository;
         this.vehicleTypeService = vehicleTypeService;
         this.modelMapper = modelMapper;
+        this.imageCloudService = imageCloudService;
+
     }
 
     public void addMeet(AddMeetModel addMeetModel){
@@ -56,6 +60,10 @@ public class MeetService {
                         .setDate(addMeetModel.getDate())
                         .setAnnouncer(user)
                 , MeetEntity.class);
+
+        PictureEntity picture = new PictureEntity()
+                .setUrl(imageCloudService.saveImage(addMeetModel.getImage()));
+        meetToSave.addPicture(picture);
 
         this.meetRepository.saveAndFlush(meetToSave);
 
