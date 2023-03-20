@@ -24,6 +24,8 @@ public class UserModel {
     private List<MeetModel> announcedMeets = new ArrayList<>();
     private List<UserRoleEntity> roles = new ArrayList<>();
 
+    private PictureModel profilePicture;
+
     public UserModel setId(Long id) {
         this.id = id;
         return this;

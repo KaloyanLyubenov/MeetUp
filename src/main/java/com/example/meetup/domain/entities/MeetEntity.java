@@ -1,14 +1,12 @@
 package com.example.meetup.domain.entities;
 
-import com.example.meetup.domain.enums.MeetTypeEnum;
-import com.example.meetup.domain.enums.VehicleTypeEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.util.Date;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -34,6 +32,14 @@ public class MeetEntity extends BaseEntity{
 
     @ManyToOne
     private UserEntity announcer;
+
+    @OneToMany(fetch = FetchType.EAGER)
+    private List<PictureEntity> pictures;
+
+    public MeetEntity setPictures(List<PictureEntity> pictures) {
+        this.pictures = pictures;
+        return this;
+    }
 
     public MeetEntity setMeetTitle(String meetTitle) {
         this.meetTitle = meetTitle;

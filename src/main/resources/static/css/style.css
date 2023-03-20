@@ -61,3 +61,22 @@ form.main-form {
     background-color: rgba(0,0,0,0.1);
     min-height: 90vh;
 }
+
+.wrapper {
+    display: grid;
+    grid-gap: 20px;
+}
+
+.road {
+    grid-template-columns: 1fr;
+}
+
+.road .btn {
+    display: block;
+    text-align: center;
+    margin: auto;
+}
+
+.whitetxt {
+    color:#ffffff;
+}

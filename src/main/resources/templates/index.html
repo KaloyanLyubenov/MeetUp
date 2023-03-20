@@ -1,21 +1,28 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{fragments/head::head}"></head>
+    <head th:replace="~{fragments/head::head}"></head>
 
 
-<body>
+    <body>
 
-<div th:replace="~{fragments/navbar :: navbar}">
-    Navbar
-</div>
+        <div th:replace="~{fragments/navbar :: navbar}">
+            Navbar
+        </div>
 
-<div class="container">
-    <h2 class="text-center text-white">Welcome to home page</h2>
-</div>
+        <section class="road" th:each="r : ${meets}" th:object="${e}">
+            <img th:src="*{thumbnailUrl}" alt="Title image">
+            <div>
+                <h2 th:text="*{name}">Your Route</h2>
+                <p th:text="*{description}">Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae alias reiciendis deleniti possimus nemo
+                    non repellendus?
+                    Quae atque vero modi quidem! Autem cupiditate fugit doloribus ad amet, asperiores provident commodi.</p>
+                <a th:href="@{/meets/details/{id}(id=*{id})}" class="btn">Learn More</a>
+            </div>
+        </section>
 
-<div>
-    <footer></footer>
-</div>
-</body>
+        <div>
+            <footer></footer>
+        </div>
+    </body>
 </html>

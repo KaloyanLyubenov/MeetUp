@@ -1,6 +1,6 @@
 package com.example.meetup.web;
 
-import com.example.meetup.domain.dto.binding.UserRegisterModel;
+import com.example.meetup.domain.dto.binding.UserRegisterDTO;
 import com.example.meetup.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -31,11 +31,11 @@ public class RegisterController{
     }
 
     @PostMapping("/users/register")
-    public String postRegister(UserRegisterModel userRegisterModel,
+    public String postRegister(UserRegisterDTO userRegisterDTO,
                                HttpServletRequest request,
                                HttpServletResponse response) {
 
-        userService.registerUser(userRegisterModel, successfulAuth -> {
+        userService.registerUser(userRegisterDTO, successfulAuth -> {
             SecurityContextHolderStrategy strategy = SecurityContextHolder.getContextHolderStrategy();
 
             SecurityContext context = strategy.createEmptyContext();

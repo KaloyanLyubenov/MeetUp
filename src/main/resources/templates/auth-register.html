@@ -13,8 +13,9 @@
 
 <div class="container">
     <h2 class="text-center text-white">Register User</h2>
-    <form th:action="@{/users/register}"
+    <form th:action="@{/users/register} "
           th:method="POST"
+          enctype="multipart/form-data"
           class="main-form mx-auto col-md-8 d-flex flex-column justify-content-center">
 
         <div class="row">
@@ -33,6 +34,17 @@
                        name="lastName"
                        type="text" min="2" max="20" class="form-control"
                        placeholder="Last name"/>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-6 mb-3">
+                <label for="profilePicture" class="text-white font-weight-bold">Profile Picture</label>
+                <input type="file"
+                       name="profilePicture"
+                       required
+                       class="form-control"
+                       id="profilePicture"/>
             </div>
         </div>
 

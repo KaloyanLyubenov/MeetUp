@@ -5,6 +5,7 @@ import com.example.meetup.domain.dto.MeetTypeModel;
 import com.example.meetup.domain.dto.UserModel;
 import com.example.meetup.domain.dto.VehicleTypeModel;
 import com.example.meetup.domain.dto.binding.AddMeetModel;
+import com.example.meetup.domain.dto.views.MeetIndexView;
 import com.example.meetup.domain.entities.MeetEntity;
 import com.example.meetup.domain.enums.MeetTypeEnum;
 import com.example.meetup.domain.enums.VehicleTypeEnum;
@@ -14,6 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class MeetService {
@@ -69,6 +73,15 @@ public class MeetService {
         }
 
         return username;
+    }
+
+    public List<MeetIndexView> getAllMeets() {
+        return meetRepository.findAll()
+                .stream().map(meet -> new MeetIndexView()
+                        .setId(meet.getId())
+                        .setMeetTitle(meet.getMeetTitle())
+                        .setDescription(meet.getDescription())
+                ).collect(Collectors.toList());
     }
 
 }

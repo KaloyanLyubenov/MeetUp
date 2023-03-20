@@ -28,12 +28,19 @@ public class UserEntity extends BaseEntity{
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     private List<MeetEntity> announcedMeets = new ArrayList<>();
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<UserRoleEntity> roles = new ArrayList<>();
 
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private PictureEntity profilePicture;
+
+    public UserEntity setProfilePicture(PictureEntity profilePicture) {
+        this.profilePicture = profilePicture;
+        return this;
+    }
 
     public String getUsername() {
         return username;

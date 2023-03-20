@@ -13,7 +13,7 @@
             <ul class="navbar-nav mr-auto col-12 justify-content-between">
                 <li class="nav-item" sec:authorize="isAuthenticated()">
                     <!-- Logged users, no mather of the roles -->
-                    <a class="nav-link" th:href="@{/pages/all}">All users</a>
+                    <a class="nav-link" th:href="@{/meets/all}">All meets</a>
                 </li>
                 <li class="nav-item" sec:authorize="isAuthenticated()">
                     <!-- Logged users, no mather of the roles -->
