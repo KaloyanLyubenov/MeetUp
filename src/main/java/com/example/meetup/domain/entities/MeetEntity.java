@@ -37,6 +37,9 @@ public class MeetEntity extends BaseEntity{
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<PictureEntity> pictures = new ArrayList<>();
 
+    @OneToOne
+    private PictureEntity thumbnail;
+
     public MeetEntity setPictures(List<PictureEntity> pictures) {
         this.pictures = pictures;
         return this;
@@ -73,6 +76,14 @@ public class MeetEntity extends BaseEntity{
     }
 
     public void addPicture(PictureEntity picture){
+        if(this.pictures.size() == 0){
+            this.thumbnail = picture;
+        }
         this.pictures.add(picture);
+    }
+
+    public MeetEntity setThumbnail(PictureEntity thumbnail) {
+        this.thumbnail = thumbnail;
+        return this;
     }
 }

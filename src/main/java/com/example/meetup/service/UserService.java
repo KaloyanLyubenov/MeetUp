@@ -67,4 +67,8 @@ public class UserService {
         return this.modelMapper.map(this.userRepository.findUserEntityByUsername(username).orElse(new UserEntity()), UserModel.class);
     }
 
+    public UserModel getUserById(Long id){
+        return this.modelMapper.map(this.userRepository.findById(id).orElse(new UserEntity()), UserModel.class);
+    }
+
 }

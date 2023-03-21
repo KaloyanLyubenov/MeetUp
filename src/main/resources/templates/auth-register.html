@@ -1,104 +1,166 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-<head th:replace="~{fragments/head::head}"></head>
+<head>
 
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <title>MeetUp</title>
+
+    <link href="@{/vendor/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+
+    <link rel="stylesheet" th:href="@{/css/fontawesome.css}">
+    <link rel="stylesheet" th:href="@{/css/templatemo-cyborg-gaming.css}">
+    <link rel="stylesheet" th:href="@{/css/owl.css}">
+    <link rel="stylesheet" th:href="@{/css/animate.css}">
+    <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
+
+</head>
 
 <body>
 
-<div th:replace="~{fragments/navbar :: navbar}">
-    Navbar
+<div id="js-preloader" class="js-preloader">
+    <div class="preloader-inner">
+        <span class="dot"></span>
+        <div class="dots">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
 </div>
 
+<header th:replace="~{fragments/navbar :: navbar}"></header>
+<!-- ***** Header Area End ***** -->
+
 <div class="container">
-    <h2 class="text-center text-white">Register User</h2>
-    <form th:action="@{/users/register} "
-          th:method="POST"
-          enctype="multipart/form-data"
-          class="main-form mx-auto col-md-8 d-flex flex-column justify-content-center">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="page-content">
 
-        <div class="row">
-            <div class="form-group col-md-6 mb-3">
-                <label for="firstName" class="text-white font-weight-bold">First Name</label>
-                <input
-                        id="firstName"
-                        name="firstName"
-                        type="text"
-                        class="form-control"
-                        placeholder="First name"/>
-            </div>
-            <div class="form-group col-md-6 mb-3">
-                <label for="lastName" class="text-white font-weight-bold">Last Name</label>
-                <input id="lastName"
-                       name="lastName"
-                       type="text" min="2" max="20" class="form-control"
-                       placeholder="Last name"/>
-            </div>
-        </div>
+                <div class="most-popular">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="heading-section">
+                                <h4>Register User</h4>
+                            </div>
+                            <form th:action="@{/users/register} "
+                                  th:method="POST"
+                                  enctype="multipart/form-data"
+                                  class="main-form mx-auto col-md-8 d-flex flex-column justify-content-center">
 
-        <div class="row">
-            <div class="form-group col-md-6 mb-3">
-                <label for="profilePicture" class="text-white font-weight-bold">Profile Picture</label>
-                <input type="file"
-                       name="profilePicture"
-                       required
-                       class="form-control"
-                       id="profilePicture"/>
-            </div>
-        </div>
+                                <div class="row">
+                                    <div class="form-group col-md-6 mb-3">
+                                        <h4 for="firstName" class="header-text">First name:</h4>
+                                        <input
+                                                id="firstName"
+                                                name="firstName"
+                                                type="text"
+                                                class="form-control"
+                                                placeholder="First name"/>
+                                    </div>
+                                    <div class="form-group col-md-6 mb-3">
+                                        <h4 for="lastName" class="header-text">Last name:</h4>
+                                        <input id="lastName"
+                                               name="lastName"
+                                               type="text" min="2" max="20" class="form-control"
+                                               placeholder="Last name"/>
+                                    </div>
+                                </div>
 
-        <div class="row">
-            <div class="form-group col-md-6 mb-3">
-                <label for="username" class="text-white font-weight-bold">Username</label>
-                <input id="username"
-                       name="username"
-                       type="text" min="2" max="20" class="form-control"
-                       placeholder="Username"/>
-            </div>
-            <div class="form-group col-md-6 mb-3">
-                <label for="email" class="text-white font-weight-bold">Email</label>
-                <input id="email"
-                       name="email"
-                       type="email" min="2" max="20" class="form-control"
-                       placeholder="email"/>
-            </div>
-        </div>
+                                <div class="row">
+                                    <div class="form-group col-md-6 mb-3">
+                                        <h4 for="profilePicture" class="header-text">Profile picture:</h4>
+                                        <input type="file"
+                                               name="profilePicture"
+                                               required
+                                               class="form-control"
+                                               id="profilePicture"/>
+                                    </div>
+                                </div>
 
-        <div class="row">
-            <div class="form-group col-md-6 mb-3">
-                <label for="password" class="text-white font-weight-bold">Password</label>
-                <input id="password"
-                       name="password"
-                       type="password" min="2" max="20" class="form-control"
-                       placeholder="Password"/>
-            </div>
-            <div class="form-group col-md-6 mb-3">
-                <label for="confirmPassword" class="text-white font-weight-bold">Confirm Password</label>
-                <input id="confirmPassword"
-                       name="confirmPassword"
-                       type="password" min="2" max="20" class="form-control"
-                       placeholder="Confirm your password"/>
-                <p class="invalid-feedback errors alert alert-danger">
-                    Confirmation password is required.
-                </p>
-            </div>
-        </div>
+                                <div class="row">
+                                    <div class="form-group col-md-6 mb-3">
+                                        <h4 for="username" class="header-text">Username:</h4>
+                                        <input id="username"
+                                               name="username"
+                                               type="text" min="2" max="20" class="form-control"
+                                               placeholder="Username"/>
+                                    </div>
+                                    <div class="form-group col-md-6 mb-3">
+                                        <h4 for="email" class="header-text">Email:</h4>
+                                        <input id="email"
+                                               name="email"
+                                               type="email" min="2" max="20" class="form-control"
+                                               placeholder="email"/>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="form-group col-md-6 mb-3">
+                                        <h4 for="password" class="header-text">Password</h4>
+                                        <input id="password"
+                                               name="password"
+                                               type="password" min="2" max="20" class="form-control"
+                                               placeholder="Password"/>
+                                    </div>
+                                    <div class="form-group col-md-6 mb-3">
+                                        <h4 for="confirmPassword" class="header-text">Confirm password:</h4>
+                                        <input id="confirmPassword"
+                                               name="confirmPassword"
+                                               type="password" min="2" max="20" class="form-control"
+                                               placeholder="Confirm your password"/>
+                                        <p class="invalid-feedback errors alert alert-danger">
+                                            Confirmation password is required.
+                                        </p>
+                                    </div>
+                                </div>
 
 
-        <div class="row">
-            <div class="col col-md-4">
-                <div class="button-holder d-flex">
-                    <input type="submit" class="btn btn-info btn-lg" value="Create account"/>
+                                <div class="row">
+                                    <div class="col col-md-4">
+                                        <div class="button-holder d-flex">
+                                            <input type="submit" class="btn btn-info btn-lg" value="Create account"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </form>
+    </div>
 </div>
 
-<div>
-    <footer> </footer>
-</div>
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <p>Copyright © 2036 <a href="#">Cyborg Gaming</a> Company. All rights reserved.
+
+                    <br>Design: <a href="https://templatemo.com" target="_blank" title="free CSS templates">TemplateMo</a>  Distributed By <a href="https://themewagon.com" target="_blank" >ThemeWagon</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- Scripts -->
+<!-- Bootstrap core JavaScript -->
+<script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+<script th:src="@{/vendor/bootstrap/js/bootstrap.min.js}"></script>
+
+<script th:src="@{/js/isotope.min.js}"></script>
+<script th:src="@{/js/owl-carousel.js}"></script>
+<script th:src="@{/tabs.js}"></script>
+<script th:src="@{/js/popup.js}"></script>
+<script th:src="@{/js/custom.js}"></script>
 
 </body>
+
 </html>

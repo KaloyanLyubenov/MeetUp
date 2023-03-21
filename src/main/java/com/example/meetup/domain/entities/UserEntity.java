@@ -31,7 +31,7 @@ public class UserEntity extends BaseEntity{
     @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     private List<MeetEntity> announcedMeets = new ArrayList<>();
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     private List<UserRoleEntity> roles = new ArrayList<>();
 
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)

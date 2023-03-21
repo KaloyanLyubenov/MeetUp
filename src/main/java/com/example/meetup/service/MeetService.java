@@ -5,6 +5,7 @@ import com.example.meetup.domain.dto.MeetTypeModel;
 import com.example.meetup.domain.dto.UserModel;
 import com.example.meetup.domain.dto.VehicleTypeModel;
 import com.example.meetup.domain.dto.binding.AddMeetModel;
+import com.example.meetup.domain.dto.views.MeetDetailsView;
 import com.example.meetup.domain.dto.views.MeetIndexView;
 import com.example.meetup.domain.entities.MeetEntity;
 import com.example.meetup.domain.entities.PictureEntity;
@@ -89,7 +90,26 @@ public class MeetService {
                         .setId(meet.getId())
                         .setMeetTitle(meet.getMeetTitle())
                         .setDescription(meet.getDescription())
+                        .setDate(meet.getDate())
+                        .setThumbnailUrl(meet.getThumbnail().getUrl())
                 ).collect(Collectors.toList());
+    }
+
+    public MeetDetailsView getMeetDetails(Long id) {
+        MeetEntity meet = this.meetRepository.findById(id).get();
+        List<String> pictureUrls = meet.getPictures()
+                .stream().map(pic -> pic.getUrl()).toList();
+        UserModel announcer = this.userService.getUserById(meet.getAnnouncer().getId());
+
+        return new MeetDetailsView()
+                .setMeetTitle(meet.getMeetTitle())
+                .setMeetType(meet.getMeetType().toString())
+                .setVehicleType(meet.getVehicleType().toString())
+                .setDescription(meet.getDescription())
+                .setDate(meet.getDate())
+                .setAnnouncer(announcer.getFirstName() + " " + announcer.getLastName())
+                .setPictureUrls(pictureUrls)
+                .setThumbnailUrl(meet.getThumbnail().getUrl());
     }
 
 }

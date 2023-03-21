@@ -1,130 +1,193 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{fragments/head::head}"></head>
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <title>MeetUp</title>
+
+  <link href="@{/vendor/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+
+  <link rel="stylesheet" th:href="@{/css/fontawesome.css}">
+  <link rel="stylesheet" th:href="@{/css/templatemo-cyborg-gaming.css}">
+  <link rel="stylesheet" th:href="@{/css/owl.css}">
+  <link rel="stylesheet" th:href="@{/css/animate.css}">
+  <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
+
+</head>
 
 <body>
 
-<div th:replace="~{fragments/navbar :: navbar}">
-  Navbar
-</div>
-
-<div class="jumbotron">
-  <div class="container text-light ">
-    <h1 class="display-3 ">
-      <strong class="bg-blur rounded border-white pl-3 font-weight-bold">Announce a meet</strong></h1>
-  </div>
-
-  <div class="container bg-blur rounded p-5 mt-5 w-75">
-    <form th:action="@{/meets/add}"
-          th:method="POST"
-          th:object="${addMeetModel}"
-          enctype="multipart/form-data"
-          class=" text-center text-light">
-
-      <div class="form-group row">
-        <label for="meetTitle" class="col-sm-2 col-form-label">Title</label>
-        <div class="col-sm-10">
-          <input type="text" class="form-control"
-                 id="meetTitle"
-                 name="meetTitle"
-                 th:value="*{meetTitle}"
-                 aria-describedby="nameHelpInline" placeholder="Title">
-          <small th:if="${#fields.hasErrors('meetTitle')}"
-                 id="meetTitleHelpInline" class="bg-danger text-light rounded">
-            Title must be between 2 and 20 characters.
-          </small>
-        </div>
-      </div>
-
-      <div class="form-group row">
-        <label for="meetType" class="col-sm-2 col-form-label">Meet Type</label>
-        <div class="col-sm-10">
-          <select
-                  id="meetType"
-                  name="meetType"
-                  class="custom-select"
-                  aria-describedby="meetTypeHelpInline">
-            <option value="" selected>Meet Type</option>
-            <option th:each="type : ${T(com.example.meetup.domain.enums.MeetTypeEnum).values()}"
-                    th:value="${type}" th:text="${type}">
-            </option>
-          </select>
-          <small th:if="${#fields.hasErrors('meetType')}"
-                 id="meetTypeHelpInline" class="bg-danger text-light rounded">
-            You must select the category.
-          </small>
-        </div>
-      </div>
-
-      <div class="form-group row">
-          <label for="vehicleType" class="col-sm-2 col-form-label">Type of Vehicles</label>
-        <div class="col-sm-10">
-          <select
-                  id="vehicleType"
-                  name="vehicleType"
-                  class="custom-select"
-                  aria-describedby="vehicleTypeHelpInline">
-            <option value="" selected>Vehicle Type</option>
-            <option th:each="type : ${T(com.example.meetup.domain.enums.VehicleTypeEnum).values()}"
-                    th:value="${type}" th:text="${type}">
-            </option>
-          </select>
-          <small th:if="${#fields.hasErrors('vehicleType')}"
-                 id="vehicleTypeHelpInline" class="bg-danger text-light rounded">
-            You must select the category.
-          </small>
-        </div>
-      </div>
-
-      <div class="form-group row">
-        <label for="description" class="col-sm-2 col-form-label">Description</label>
-        <div class="col-sm-10">
-                    <textarea name="description"
-                              required minlength="5"
-                              id="description"
-                              class="form-control"
-                              th:value="*{description}"
-                              aria-describedby="descriptionError"></textarea>
-          <small id="descriptionError"
-                 class="invalid-feedback  form-text bg-danger rounded">Description length must be more than 5
-            characters</small>
-        </div>
-      </div>
-
-
-      <div class="form-group col-md-6 mb-3">
-        <label for="image" class="text-white font-weight-bold">Profile Picture</label>
-        <input type="file"
-               name="image"
-               required
-               class="form-control"
-               id="image"/>
-      </div>
-
-
-      <div class="form-group row">
-        <label for="date" class="col-sm-2 col-form-label">Date</label>
-        <div class="col-sm-10">
-          <input type="datetime-local"
-                 class="form-control"
-                 id="date" name="date"
-                 th:value="*{date}"
-                 aria-describedby="dateHelpInline">
-          <small th:if="${#fields.hasErrors('date')}" id="dateHelpInline" class="bg-danger text-light rounded">
-            Start date should be in the future.
-          </small>
-        </div>
-      </div>
-
-      <button type="submit" class="btn btn-danger w-50">Announce Meet</button>
-    </form>
+<div id="js-preloader" class="js-preloader">
+  <div class="preloader-inner">
+    <span class="dot"></span>
+    <div class="dots">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
   </div>
 </div>
 
-<div>
-  <footer></footer>
+<header th:replace="~{fragments/navbar :: navbar}"></header>
+<!-- ***** Header Area End ***** -->
+
+<div class="container">
+  <div class="row">
+    <div class="col col-lg-4">
+      <div class="page-content">
+        <div class="most-popular">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="heading-section">
+                <h4><em>Add meet: </em></h4>
+              </div>
+              <form th:action="@{/meets/add}"
+                    th:method="POST"
+                    th:object="${addMeetModel}"
+                    enctype="multipart/form-data"
+                    class=" text-center text-light">
+
+                <div class="form-group row">
+                  <h4 for="meetTitle" class="header-text">Meet title: </h4>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control"
+                           id="meetTitle"
+                           name="meetTitle"
+                           th:value="*{meetTitle}"
+                           aria-describedby="nameHelpInline" placeholder="Title">
+                    <small th:if="${#fields.hasErrors('meetTitle')}"
+                           id="meetTitleHelpInline" class="bg-danger text-light rounded">
+                      Title must be between 2 and 20 characters.
+                    </small>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <h4 for="meetType" class="header-text">Meet type: </h4>
+                  <div class="col-sm-10">
+                    <select
+                            id="meetType"
+                            name="meetType"
+                            class="custom-select"
+                            aria-describedby="meetTypeHelpInline">
+                      <option value="" selected>Meet Type</option>
+                      <option th:each="type : ${T(com.example.meetup.domain.enums.MeetTypeEnum).values()}"
+                              th:value="${type}" th:text="${type}">
+                      </option>
+                    </select>
+                    <small th:if="${#fields.hasErrors('meetType')}"
+                           id="meetTypeHelpInline" class="bg-danger text-light rounded">
+                      You must select the category.
+                    </small>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <h4 for="vehicleType" class="header-text">Vehicle type: </h4>
+                  <div class="col-sm-10">
+                    <select
+                            id="vehicleType"
+                            name="vehicleType"
+                            class="custom-select"
+                            aria-describedby="vehicleTypeHelpInline">
+                      <option value="" selected>Vehicle Type</option>
+                      <option th:each="type : ${T(com.example.meetup.domain.enums.VehicleTypeEnum).values()}"
+                              th:value="${type}" th:text="${type}">
+                      </option>
+                    </select>
+                    <small th:if="${#fields.hasErrors('vehicleType')}"
+                           id="vehicleTypeHelpInline" class="bg-danger text-light rounded">
+                      You must select the category.
+                    </small>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <h4 for="description" class="header-text">Description: </h4>
+                  <div class="col-sm-10">
+                                            <textarea name="description"
+                                                      required minlength="5"
+                                                      id="description"
+                                                      class="form-control"
+                                                      th:value="*{description}"
+                                                      aria-describedby="descriptionError"></textarea>
+                    <small id="descriptionError"
+                           class="invalid-feedback  form-text bg-danger rounded">Description length must be more than 5
+                      characters</small>
+                  </div>
+                </div>
+
+
+                <div class="form-group col-md-6 mb-3">
+                  <h4 for="image" class="header-text">Thumbnail: </h4>
+                  <input type="file"
+                         name="image"
+                         required
+                         class="form-control"
+                         id="image"/>
+                </div>
+
+
+                <div class="form-group row">
+                  <h4 for="date" class="header-text">Date: </h4>
+                  <div class="col-sm-10">
+                    <input type="datetime-local"
+                           class="form-control"
+                           id="date" name="date"
+                           th:value="*{date}"
+                           aria-describedby="dateHelpInline">
+                    <small th:if="${#fields.hasErrors('date')}" id="dateHelpInline" class="bg-danger text-light rounded">
+                      Start date should be in the future.
+                    </small>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col col-lg-4">
+                    <div class="main-button">
+                      <input type="submit" value="Add meet"/>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
+
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <p>Copyright © 2036 <a href="#">Cyborg Gaming</a> Company. All rights reserved.
+
+          <br>Design: <a href="https://templatemo.com" target="_blank" title="free CSS templates">TemplateMo</a>  Distributed By <a href="https://themewagon.com" target="_blank" >ThemeWagon</a></p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Scripts -->
+<!-- Bootstrap core JavaScript -->
+<script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+<script th:src="@{/vendor/bootstrap/js/bootstrap.min.js}"></script>
+
+<script th:src="@{/js/isotope.min.js}"></script>
+<script th:src="@{/js/owl-carousel.js}"></script>
+<script th:src="@{/tabs.js}"></script>
+<script th:src="@{/js/popup.js}"></script>
+<script th:src="@{/js/custom.js}"></script>
+
 </body>
+
 </html>

@@ -134,6 +134,12 @@ body .page-content {
   border-radius: 23px;
 }
 
+.meet-title {
+  background-color: #27292a;
+  padding-left: 15px;
+  border-radius: 23px;
+}
+
 p {
   font-size: 15px;
   color: #666;
@@ -152,7 +158,7 @@ p {
 }
 
 .templatemo-item {
-	max-width: 80px; 
+	max-width: 80px;
 	border-radius: 23px;
 }
 
@@ -1517,8 +1523,19 @@ Top Streamers Style
 
 /* 
 ---------------------------------------------
-Profile Style
+Meet View Style
 --------------------------------------------- 
+*/
+
+.meet-view-image {
+  max-width: 302px;
+  border-radius: 23px;
+}
+
+/*
+---------------------------------------------
+Profile Style
+---------------------------------------------
 */
 
 .main-profile {

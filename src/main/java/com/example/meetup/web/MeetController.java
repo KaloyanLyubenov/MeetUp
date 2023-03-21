@@ -1,6 +1,7 @@
 package com.example.meetup.web;
 
 import com.example.meetup.domain.dto.binding.AddMeetModel;
+import com.example.meetup.domain.dto.views.MeetDetailsView;
 import com.example.meetup.domain.dto.views.MeetIndexView;
 import com.example.meetup.service.MeetService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,10 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
@@ -61,9 +59,13 @@ public class MeetController {
         return "meet-view-all";
     }
 
-    @ModelAttribute(name = "addMeetModel")
-    public AddMeetModel addMeetModel(){
-        return new AddMeetModel();
+    @GetMapping("/details/{id}")
+    public String getMeetDetails(@PathVariable("id") Long meetId, Model model){
+        MeetDetailsView meet = meetService.getMeetDetails(meetId);
+
+        model.addAttribute("meet", meet);
+
+        return "meet-details";
     }
 
 }

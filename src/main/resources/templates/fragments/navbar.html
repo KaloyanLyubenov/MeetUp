@@ -25,8 +25,18 @@
                         <li><a th:href="@{/pages/admins}" sec:authorize="hasRole('ADMIN')">Admins</a></li>
                         <li><a th:href="@{/users/login}" sec:authorize="!isAuthenticated()">Login</a></li>
                         <li><a th:href="@{/users/register}" sec:authorize="!isAuthenticated()">Register</a></li>
-                        <li><a th:href="@{/users/logout}" sec:authorize="isAuthenticated()">Logout</a></li>
-                        <li><a href="profile.html" sec:authorize="isAuthenticated()"><th:block sec:authentication="principal.username"></th:block><img th:src="@{/images/profile-header.jpg}" alt=""></a></li>
+                        <li>
+                            <form
+                                    sec:authorize="isAuthenticated()"
+                                    th:method="post"
+                                    th:action="@{/users/logout}">
+                                <input class="btn btn-link nav-link" type="submit" value="Logout">
+                            </form>
+                        </li>
+                        <li><a href="profile.html" sec:authorize="isAuthenticated()">
+                            <th:block sec:authentication="principal.username"></th:block>
+                            <img th:src="@{/images/profile-header.jpg}" alt=""></a>
+                        </li>
                     </ul>
 
                     <a class='menu-trigger'>
@@ -38,15 +48,6 @@
         </div>
     </div>
 </header>
-
-<script th:src="@{/vendor/jquery/jquery.min.js}"></script>
-<script th:src="@{/vendor/bootstrap/js/bootstrap.min.js}"></script>
-
-<script th:src="@{/js/isotope.min.js}"></script>
-<script th:src="@{/js/owl-carousel.js}"></script>
-<script th:src="@{/tabs.js}"></script>
-<script th:src="@{/js/popup.js}"></script>
-<script th:src="@{/js/custom.js}"></script>
 
 </body>
 </html>
