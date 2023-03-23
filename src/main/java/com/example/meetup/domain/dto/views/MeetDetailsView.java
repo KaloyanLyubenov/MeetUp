@@ -17,6 +17,8 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 public class MeetDetailsView {
+
+    private Long id;
     private String meetTitle;
     private String meetType;
     private String vehicleType;
@@ -26,6 +28,10 @@ public class MeetDetailsView {
     private List<String> pictureUrls = new ArrayList<>();
     private String thumbnailUrl;
 
+    public MeetDetailsView setId(Long id) {
+        this.id = id;
+        return this;
+    }
 
     public MeetDetailsView setMeetTitle(String meetTitle) {
         this.meetTitle = meetTitle;

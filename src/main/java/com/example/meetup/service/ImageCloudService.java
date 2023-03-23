@@ -29,7 +29,8 @@ public class ImageCloudService {
         Map params = ObjectUtils.asMap(
                 "public_id", imageId,
                 "overwrite", true,
-                "resource_type", "image"
+                "resource_type", "image",
+                "format", "jpg"
         );
 
         Map upload;

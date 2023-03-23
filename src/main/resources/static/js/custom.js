@@ -1,3 +1,5 @@
+
+
 (function ($) {
 	
 	"use strict";
@@ -27,8 +29,11 @@
 	  var scroll = $(window).scrollTop();
 	  var box = $('.header-text').height();
 	  var header = $('header').height();
+	  console.log(scroll);
+	  console.log(box);
+	  console.log(header);
 
-	  if (scroll >= box - header) {
+	  if (scroll > 20) {
 	    $("header").addClass("background-header");
 	  } else {
 	    $("header").removeClass("background-header");

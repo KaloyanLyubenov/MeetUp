@@ -3,8 +3,10 @@ package com.example.meetup.config;
 import com.example.meetup.domain.enums.UserRoleEnum;
 import com.example.meetup.repository.UserRepository;
 import com.example.meetup.service.ApplicationUserDetailsService;
+import jakarta.servlet.MultipartConfigElement;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
+import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -17,6 +19,7 @@ import org.springframework.security.web.context.DelegatingSecurityContextReposit
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.security.web.context.RequestAttributeSecurityContextRepository;
 import org.springframework.security.web.context.SecurityContextRepository;
+import org.springframework.util.unit.DataSize;
 
 import java.sql.PseudoColumnUsage;
 
@@ -37,7 +40,7 @@ public class SecurityConfiguration {
                 // allow access to all static files (images, CSS, js)
                         requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll().
                 // the URL-s below are available for all users - logged in and anonymous
-                        requestMatchers("/", "/users/login", "/users/register", "/users/login-error", "/meets/add").permitAll().
+                        requestMatchers("/", "/users/login", "/users/register", "/users/login-error", "/meets/all", "/details/{id}").permitAll().
                 // only for moderators
                         requestMatchers("/pages/moderators").hasRole(UserRoleEnum.MODERATOR.name()).
                 // only for admins
@@ -80,6 +83,14 @@ public class SecurityConfiguration {
                 new RequestAttributeSecurityContextRepository(),
                 new HttpSessionSecurityContextRepository()
         );
+    }
+
+    @Bean
+    public MultipartConfigElement multipartConfigElement() {
+        MultipartConfigFactory factory = new MultipartConfigFactory();
+        factory.setMaxFileSize(DataSize.parse("20MB"));
+        factory.setMaxRequestSize(DataSize.parse("20MB"));
+        return factory.createMultipartConfig();
     }
 
 }

@@ -1,7 +1,5 @@
 package com.example.meetup.domain.dto.binding;
 
-import com.example.meetup.domain.enums.MeetTypeEnum;
-import com.example.meetup.domain.enums.VehicleTypeEnum;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -15,7 +13,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-public class AddMeetModel {
+public class AddMeetDTO {
 
     @Size(min = 2, max = 20)
     @NotNull
@@ -37,32 +35,32 @@ public class AddMeetModel {
 
     private MultipartFile image;
 
-    public AddMeetModel setImage(MultipartFile image) {
+    public AddMeetDTO setImage(MultipartFile image) {
         this.image = image;
         return this;
     }
 
-    public AddMeetModel setMeetTitle(String meetTitle) {
+    public AddMeetDTO setMeetTitle(String meetTitle) {
         this.meetTitle = meetTitle;
         return this;
     }
 
-    public AddMeetModel setMeetType(String meetType) {
+    public AddMeetDTO setMeetType(String meetType) {
         this.meetType = meetType;
         return this;
     }
 
-    public AddMeetModel setVehicleType(String vehicleType) {
+    public AddMeetDTO setVehicleType(String vehicleType) {
         this.vehicleType = vehicleType;
         return this;
     }
 
-    public AddMeetModel setDescription(String description) {
+    public AddMeetDTO setDescription(String description) {
         this.description = description;
         return this;
     }
 
-    public AddMeetModel setDate(Date date) {
+    public AddMeetDTO setDate(Date date) {
         this.date = date;
         return this;
     }

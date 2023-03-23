@@ -805,11 +805,41 @@ Banner Style
   color: #ec6090;
 }
 
+.secondary-banner {
+  background-color: #1a1e21;
+  background-position: center center;
+  background-size: cover;
+  border-radius: 23px;
+  padding-left: 10px;
+}
+
+.secondary-banner h6 {
+  font-size: 20px;
+  color: #fff;
+  font-weight: 400;
+  margin-bottom: 25px;
+}
+
+.secondary-banner h4 {
+  font-size: 45px;
+  text-transform: uppercase;
+  margin-bottom: 25px;
+}
+
+.secondary-banner h4 em {
+  font-style: normal;
+  color: #ec6090;
+}
+
 /* 
 ---------------------------------------------
 Most Popular Style
 --------------------------------------------- 
 */
+
+.hidden {
+  display: none;
+}
 
 .most-popular {
   margin-top: 60px;

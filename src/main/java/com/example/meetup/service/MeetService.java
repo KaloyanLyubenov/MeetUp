@@ -4,9 +4,10 @@ import com.example.meetup.domain.dto.MeetModel;
 import com.example.meetup.domain.dto.MeetTypeModel;
 import com.example.meetup.domain.dto.UserModel;
 import com.example.meetup.domain.dto.VehicleTypeModel;
-import com.example.meetup.domain.dto.binding.AddMeetModel;
+import com.example.meetup.domain.dto.binding.AddMeetDTO;
 import com.example.meetup.domain.dto.views.MeetDetailsView;
 import com.example.meetup.domain.dto.views.MeetIndexView;
+import com.example.meetup.domain.dto.views.PopularMeetView;
 import com.example.meetup.domain.entities.MeetEntity;
 import com.example.meetup.domain.entities.PictureEntity;
 import com.example.meetup.domain.enums.MeetTypeEnum;
@@ -47,23 +48,23 @@ public class MeetService {
 
     }
 
-    public void addMeet(AddMeetModel addMeetModel){
+    public void addMeet(AddMeetDTO addMeetDTO){
         UserModel user = this.userService.getUserByUsername(getLoggedUserUsername());
-        MeetTypeModel meetType = this.meetTypeService.findByType(MeetTypeEnum.valueOf(addMeetModel.getMeetType()));
-        VehicleTypeModel vehicleType = this.vehicleTypeService.findByType(VehicleTypeEnum.valueOf(addMeetModel.getVehicleType()));
+        MeetTypeModel meetType = this.meetTypeService.findByType(MeetTypeEnum.valueOf(addMeetDTO.getMeetType()));
+        VehicleTypeModel vehicleType = this.vehicleTypeService.findByType(VehicleTypeEnum.valueOf(addMeetDTO.getVehicleType()));
 
         MeetEntity meetToSave = this.modelMapper.map(
                 new MeetModel()
-                        .setMeetTitle(addMeetModel.getMeetTitle())
+                        .setMeetTitle(addMeetDTO.getMeetTitle())
                         .setMeetType(meetType)
                         .setVehicleType(vehicleType)
-                        .setDescription(addMeetModel.getDescription())
-                        .setDate(addMeetModel.getDate())
+                        .setDescription(addMeetDTO.getDescription())
+                        .setDate(addMeetDTO.getDate())
                         .setAnnouncer(user)
                 , MeetEntity.class);
 
         PictureEntity picture = new PictureEntity()
-                .setUrl(imageCloudService.saveImage(addMeetModel.getImage()));
+                .setUrl(imageCloudService.saveImage(addMeetDTO.getImage()));
         meetToSave.addPicture(picture);
 
         this.meetRepository.saveAndFlush(meetToSave);
@@ -102,6 +103,7 @@ public class MeetService {
         UserModel announcer = this.userService.getUserById(meet.getAnnouncer().getId());
 
         return new MeetDetailsView()
+                .setId(meet.getId())
                 .setMeetTitle(meet.getMeetTitle())
                 .setMeetType(meet.getMeetType().toString())
                 .setVehicleType(meet.getVehicleType().toString())
@@ -110,6 +112,20 @@ public class MeetService {
                 .setAnnouncer(announcer.getFirstName() + " " + announcer.getLastName())
                 .setPictureUrls(pictureUrls)
                 .setThumbnailUrl(meet.getThumbnail().getUrl());
+    }
+
+    public List<PopularMeetView> getPopularMeets(){
+        return meetRepository.findFirst4ByOrderByIdAsc()
+                .stream().map(meet -> new PopularMeetView()
+                        .setId(meet.getId())
+                        .setMeetType(meet.getMeetType().toString())
+                        .setMeetTitle(meet.getMeetTitle())
+                        .setThumbnailUrl(meet.getThumbnail().getUrl()))
+                .collect(Collectors.toList());
+    }
+
+    public MeetModel findById(Long id){
+        return this.modelMapper.map(this.meetRepository.findById(id), MeetModel.class);
     }
 
 }

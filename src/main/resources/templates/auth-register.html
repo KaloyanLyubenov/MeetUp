@@ -1,29 +1,12 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+      xmlns:th="http://www.thymeleaf.org">
 
-<head>
-
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-
-    <title>MeetUp</title>
-
-    <link href="@{/vendor/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
-
-    <link rel="stylesheet" th:href="@{/css/fontawesome.css}">
-    <link rel="stylesheet" th:href="@{/css/templatemo-cyborg-gaming.css}">
-    <link rel="stylesheet" th:href="@{/css/owl.css}">
-    <link rel="stylesheet" th:href="@{/css/animate.css}">
-    <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
-
-</head>
+<head th:replace="~{fragments/head :: head}"></head>
 
 <body>
 
+<!-- ***** Preloader Start ***** -->
 <div id="js-preloader" class="js-preloader">
     <div class="preloader-inner">
         <span class="dot"></span>
@@ -34,7 +17,9 @@
         </div>
     </div>
 </div>
+<!-- ***** Preloader End ***** -->
 
+<!-- ***** Header Area Start ***** -->
 <header th:replace="~{fragments/navbar :: navbar}"></header>
 <!-- ***** Header Area End ***** -->
 
@@ -55,7 +40,7 @@
                                   class="main-form mx-auto col-md-8 d-flex flex-column justify-content-center">
 
                                 <div class="row">
-                                    <div class="form-group col-md-6 mb-3">
+                                    <div class="form-group col-lg-6 mb-3">
                                         <h4 for="firstName" class="header-text">First name:</h4>
                                         <input
                                                 id="firstName"
@@ -64,7 +49,7 @@
                                                 class="form-control"
                                                 placeholder="First name"/>
                                     </div>
-                                    <div class="form-group col-md-6 mb-3">
+                                    <div class="form-group col-lg-6 mb-3">
                                         <h4 for="lastName" class="header-text">Last name:</h4>
                                         <input id="lastName"
                                                name="lastName"
@@ -74,7 +59,7 @@
                                 </div>
 
                                 <div class="row">
-                                    <div class="form-group col-md-6 mb-3">
+                                    <div class="form-group col-lg-6 mb-3">
                                         <h4 for="profilePicture" class="header-text">Profile picture:</h4>
                                         <input type="file"
                                                name="profilePicture"
@@ -85,14 +70,14 @@
                                 </div>
 
                                 <div class="row">
-                                    <div class="form-group col-md-6 mb-3">
+                                    <div class="form-group col-lg-6 mb-3">
                                         <h4 for="username" class="header-text">Username:</h4>
                                         <input id="username"
                                                name="username"
                                                type="text" min="2" max="20" class="form-control"
                                                placeholder="Username"/>
                                     </div>
-                                    <div class="form-group col-md-6 mb-3">
+                                    <div class="form-group col-lg-6 mb-3">
                                         <h4 for="email" class="header-text">Email:</h4>
                                         <input id="email"
                                                name="email"
@@ -102,14 +87,14 @@
                                 </div>
 
                                 <div class="row">
-                                    <div class="form-group col-md-6 mb-3">
+                                    <div class="form-group col-lg-6 mb-3">
                                         <h4 for="password" class="header-text">Password</h4>
                                         <input id="password"
                                                name="password"
                                                type="password" min="2" max="20" class="form-control"
                                                placeholder="Password"/>
                                     </div>
-                                    <div class="form-group col-md-6 mb-3">
+                                    <div class="form-group col-lg-6 mb-3">
                                         <h4 for="confirmPassword" class="header-text">Confirm password:</h4>
                                         <input id="confirmPassword"
                                                name="confirmPassword"
@@ -138,6 +123,7 @@
     </div>
 </div>
 
+
 <footer>
     <div class="container">
         <div class="row">
@@ -152,14 +138,7 @@
 
 <!-- Scripts -->
 <!-- Bootstrap core JavaScript -->
-<script th:src="@{/vendor/jquery/jquery.min.js}"></script>
-<script th:src="@{/vendor/bootstrap/js/bootstrap.min.js}"></script>
-
-<script th:src="@{/js/isotope.min.js}"></script>
-<script th:src="@{/js/owl-carousel.js}"></script>
-<script th:src="@{/tabs.js}"></script>
-<script th:src="@{/js/popup.js}"></script>
-<script th:src="@{/js/custom.js}"></script>
+<div th:replace="~{fragments/scripts :: scripts}"></div>
 
 </body>
 

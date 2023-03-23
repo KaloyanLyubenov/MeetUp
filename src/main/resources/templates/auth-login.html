@@ -3,24 +3,7 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-<head>
-
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-
-    <title>MeetUp</title>
-
-    <link href="@{/vendor/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
-
-    <link rel="stylesheet" th:href="@{/css/fontawesome.css}">
-    <link rel="stylesheet" th:href="@{/css/templatemo-cyborg-gaming.css}">
-    <link rel="stylesheet" th:href="@{/css/owl.css}">
-    <link rel="stylesheet" th:href="@{/css/animate.css}">
-    <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
-
-</head>
+<head th:replace="~{fragments/head :: head}"></head>
 
 <body>
 
@@ -106,14 +89,7 @@
 
 <!-- Scripts -->
 <!-- Bootstrap core JavaScript -->
-<script th:src="@{/vendor/jquery/jquery.min.js}"></script>
-<script th:src="@{/vendor/bootstrap/js/bootstrap.min.js}"></script>
-
-<script th:src="@{/js/isotope.min.js}"></script>
-<script th:src="@{/js/owl-carousel.js}"></script>
-<script th:src="@{/tabs.js}"></script>
-<script th:src="@{/js/popup.js}"></script>
-<script th:src="@{/js/custom.js}"></script>
+<div th:replace="~{fragments/scripts :: scripts}"></div>
 
 </body>
 
