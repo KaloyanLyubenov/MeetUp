@@ -47,11 +47,6 @@ public class PagesController {
         return "admins";
     }
 
-    @GetMapping("/pages/moderators")
-    public String moderators() {
-        return "moderators";
-    }
-
     @GetMapping("/users/logout")
     public String logout() {
         return "redirect:/";

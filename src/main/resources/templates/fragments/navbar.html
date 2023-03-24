@@ -21,7 +21,7 @@
                         <li><a th:href="@{/}" class="active">Home</a></li>
                         <li><a th:href="@{/meets/all}">All meets</a></li>
                         <li><a th:href="@{/meets/add}" sec:authorize="isAuthenticated()">Add a meet</a></li>
-                        <li><a th:href="@{/pages/moderators}" sec:authorize="hasRole('MODERATOR')">Moderators</a></li>
+                        <li><a th:href="@{/moderators}" sec:authorize="hasRole('MODERATOR')">Moderators</a></li>
                         <li><a th:href="@{/pages/admins}" sec:authorize="hasRole('ADMIN')">Admins</a></li>
                         <li><a th:href="@{/users/login}" sec:authorize="!isAuthenticated()">Login</a></li>
                         <li><a th:href="@{/users/register}" sec:authorize="!isAuthenticated()">Register</a></li>
