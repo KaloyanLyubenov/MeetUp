@@ -66,7 +66,7 @@
                   <li><img th:src="*{thumbnailUrl}" alt="" class="templatemo-item"></li>
                   <li><h4 th:text="*{meetTitle}">Your Meet</h4><span th:text="*{description}">desc</span></li>
                   <li><h4>Date: </h4><span th:text="*{date}">--/--/----</span></li>
-                  <li><div class="main-border-button border-no-active"><a th:href="@{/meets/edit/{id}(id=*{id})}">Edit</a></div></li>
+                  <li><div class="main-border-button"><a th:href="@{/meets/edit/{id}(id=*{id})}">Edit</a></div></li>
                 </ul>
               </div>
             </div>

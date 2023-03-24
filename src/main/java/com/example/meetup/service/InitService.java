@@ -3,17 +3,11 @@ package com.example.meetup.service;
 import com.example.meetup.domain.dto.MeetTypeModel;
 import com.example.meetup.domain.dto.UserRoleModel;
 import com.example.meetup.domain.dto.VehicleTypeModel;
-import com.example.meetup.domain.entities.MeetTypeEntity;
-import com.example.meetup.domain.entities.UserEntity;
-import com.example.meetup.domain.entities.UserRoleEntity;
-import com.example.meetup.domain.entities.VehicleTypeEntity;
+import com.example.meetup.domain.entities.*;
 import com.example.meetup.domain.enums.MeetTypeEnum;
 import com.example.meetup.domain.enums.UserRoleEnum;
 import com.example.meetup.domain.enums.VehicleTypeEnum;
-import com.example.meetup.repository.MeetTypeRepository;
-import com.example.meetup.repository.UserRepository;
-import com.example.meetup.repository.UserRoleRepository;
-import com.example.meetup.repository.VehicleTypeRepository;
+import com.example.meetup.repository.*;
 import jakarta.annotation.PostConstruct;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,19 +26,22 @@ public class InitService {
     private final VehicleTypeRepository vehicleTypeRepository;
     private final MeetTypeRepository meetTypeRepository;
     private final ModelMapper modelMapper;
+    private final PictureRepository pictureRepository;
 
     @Autowired
-    public InitService(UserRepository userRepository, UserRoleRepository userRoleRepository, PasswordEncoder passwordEncoder, VehicleTypeRepository vehicleTypeRepository, MeetTypeRepository meetTypeRepository, ModelMapper modelMapper) {
+    public InitService(UserRepository userRepository, UserRoleRepository userRoleRepository, PasswordEncoder passwordEncoder, VehicleTypeRepository vehicleTypeRepository, MeetTypeRepository meetTypeRepository, ModelMapper modelMapper, PictureRepository pictureRepository) {
         this.userRepository = userRepository;
         this.userRoleRepository = userRoleRepository;
         this.passwordEncoder = passwordEncoder;
         this.vehicleTypeRepository = vehicleTypeRepository;
         this.meetTypeRepository = meetTypeRepository;
         this.modelMapper = modelMapper;
+        this.pictureRepository = pictureRepository;
     }
 
     @PostConstruct
     public void init(){
+        initDefaultPicture();
         initRoles();
         initUsers();
         initMeetTypes();
@@ -93,7 +90,8 @@ public class InitService {
                 .setEmail("admin@example.com")
                 .setFirstName("admin")
                 .setLastName("admin")
-                .setRoles(userRoleRepository.findAll());
+                .setRoles(userRoleRepository.findAll())
+                .setProfilePicture(this.pictureRepository.findById((long)1).get());
         userRepository.save(adminUser);
     }
 
@@ -107,7 +105,8 @@ public class InitService {
                 .setEmail("mod@example.com")
                 .setFirstName("mod")
                 .setLastName("mod")
-                .setRoles(List.of(moderatorRole));
+                .setRoles(List.of(moderatorRole))
+                .setProfilePicture(this.pictureRepository.findById((long)1).get());
 
         userRepository.save(moderatorUser);
     }
@@ -118,8 +117,16 @@ public class InitService {
                 .setPassword(passwordEncoder.encode("topsecret"))
                 .setEmail("user@example.com")
                 .setFirstName("user")
-                .setLastName("user");
+                .setLastName("user")
+                .setProfilePicture(this.pictureRepository.findById((long)1).get());
 
         userRepository.save(moderatorUser);
+    }
+
+    private void initDefaultPicture(){
+        PictureEntity picture = new PictureEntity()
+                .setUrl("https://res.cloudinary.com/ddwhij8d7/image/upload/v1679322618/icon-256x256_fpo48i.png");
+
+        this.pictureRepository.save(picture);
     }
 }

@@ -1,13 +1,14 @@
 package com.example.meetup.domain.entities;
 
+import com.example.meetup.domain.enums.UserRoleEnum;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Entity
 @Builder
@@ -77,6 +78,22 @@ public class UserEntity extends BaseEntity{
         this.roles = roles;
         return this;
     }
+
+    public Boolean isAdmin(){
+        if(this.getRoles().stream()
+                .anyMatch(role -> role.getUserRole() == UserRoleEnum.ADMIN)){
+            return true;
+        }
+        return false;
+    }
+    public Boolean isModerator(){
+        if(this.getRoles().stream()
+                .anyMatch(role -> role.getUserRole() == UserRoleEnum.MODERATOR)){
+            return true;
+        }
+        return false;
+    }
+
 
 
 }

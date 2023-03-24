@@ -37,16 +37,6 @@ public class PagesController {
         return "index";
     }
 
-    @GetMapping("/pages/all")
-    public String all() {
-        return "all";
-    }
-
-    @GetMapping("/pages/admins")
-    public String admins() {
-        return "admins";
-    }
-
     @GetMapping("/users/logout")
     public String logout() {
         return "redirect:/";
@@ -65,7 +55,7 @@ public class PagesController {
                 .setMeets(meets);
 
         model.addAttribute("user", userAccountView);
-        //model.addAttribute("meets", meets);
+
         return "profile";
     }
 }
