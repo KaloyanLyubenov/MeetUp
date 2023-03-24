@@ -1,6 +1,7 @@
 package com.example.meetup.domain.dto;
 
 
+import com.example.meetup.domain.entities.PictureEntity;
 import com.example.meetup.domain.entities.UserEntity;
 import com.example.meetup.domain.enums.MeetTypeEnum;
 import com.example.meetup.domain.enums.VehicleTypeEnum;
@@ -10,6 +11,7 @@ import lombok.NoArgsConstructor;
 
 
 import java.util.Date;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -22,6 +24,8 @@ public class MeetModel {
     private String description;
     private Date date;
     private UserModel announcer;
+    private List<PictureModel> pictures;
+    private PictureModel thumbnail;
 
 
     public MeetModel setId(Long id) {
@@ -56,6 +60,16 @@ public class MeetModel {
 
     public MeetModel setAnnouncer(UserModel announcer) {
         this.announcer = announcer;
+        return this;
+    }
+
+    public MeetModel setPictures(List<PictureModel> pictures) {
+        this.pictures = pictures;
+        return this;
+    }
+
+    public MeetModel setThumbnail(PictureModel thumbnail) {
+        this.thumbnail = thumbnail;
         return this;
     }
 }

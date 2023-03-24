@@ -1,5 +1,6 @@
 package com.example.meetup.service;
 
+import com.example.meetup.domain.AppUserDetails;
 import com.example.meetup.domain.entities.UserEntity;
 import com.example.meetup.domain.entities.UserRoleEntity;
 import com.example.meetup.repository.UserRepository;
@@ -22,19 +23,20 @@ public class ApplicationUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return
-                userRepository.
+        UserDetails userDetails = userRepository.
                 findUserEntityByUsername(username).
                 map(this::map).
-                orElseThrow(() -> new UsernameNotFoundException("Username with name "+ username + " was not found!"));
+                orElseThrow(() -> new UsernameNotFoundException("Username with name " + username + " was not found!"));
+
+        return userDetails;
     }
 
     private UserDetails map(UserEntity userEntity){
-        return new User(
+        return new AppUserDetails(
                 userEntity.getUsername(),
                 userEntity.getPassword(),
                 extractAuthorities(userEntity)
-        );
+        ).setEntityId(userEntity.getId());
     }
 
     private List<GrantedAuthority> extractAuthorities(UserEntity userEntity){

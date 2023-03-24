@@ -1,10 +1,8 @@
 package com.example.meetup.service;
 
-import com.example.meetup.domain.dto.MeetModel;
-import com.example.meetup.domain.dto.MeetTypeModel;
-import com.example.meetup.domain.dto.UserModel;
-import com.example.meetup.domain.dto.VehicleTypeModel;
+import com.example.meetup.domain.dto.*;
 import com.example.meetup.domain.dto.binding.AddMeetDTO;
+import com.example.meetup.domain.dto.binding.EditMeetDTO;
 import com.example.meetup.domain.dto.views.MeetDetailsView;
 import com.example.meetup.domain.dto.views.MeetIndexView;
 import com.example.meetup.domain.dto.views.PopularMeetView;
@@ -126,6 +124,45 @@ public class MeetService {
 
     public MeetModel findById(Long id){
         return this.modelMapper.map(this.meetRepository.findById(id), MeetModel.class);
+    }
+
+    public EditMeetDTO findMeetToEditById(Long id){
+        MeetModel meet = this.modelMapper.map(this.meetRepository.findById(id), MeetModel.class);
+
+        return new EditMeetDTO()
+                .setId(meet.getId())
+                .setMeetTitle(meet.getMeetTitle())
+                .setMeetType(meet.getMeetType().toString())
+                .setVehicleType(meet.getVehicleType().toString())
+                .setDate(meet.getDate())
+                .setDescription(meet.getDescription());
+    }
+
+    public void editMeet(EditMeetDTO editMeetDTO){
+        MeetModel meetToEdit = this.modelMapper.map(this.meetRepository.findById(editMeetDTO.getId()), MeetModel.class);
+
+        meetToEdit
+                .setMeetTitle(editMeetDTO.getMeetTitle())
+                .setMeetType(this.meetTypeService.findByType(MeetTypeEnum.valueOf(editMeetDTO.getMeetType())))
+                .setVehicleType(this.vehicleTypeService.findByType(VehicleTypeEnum.valueOf(editMeetDTO.getVehicleType())))
+                .setDescription(editMeetDTO.getDescription());
+
+        this.meetRepository.saveAndFlush(
+                this.modelMapper.map(
+                        meetToEdit, MeetEntity.class
+                )
+        );
+    }
+
+    public List<MeetIndexView> getMeetsIndexViewByAnnouncerId(Long id){
+        return this.meetRepository.findByAnnouncer_Id(id)
+                .stream().map(meet -> new MeetIndexView()
+                        .setId(meet.getId())
+                        .setMeetTitle(meet.getMeetTitle())
+                        .setDate(meet.getDate())
+                        .setDescription(meet.getDescription())
+                        .setThumbnailUrl(meet.getThumbnail().getUrl()))
+                .collect(Collectors.toList());
     }
 
 }

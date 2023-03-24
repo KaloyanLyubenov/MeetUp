@@ -10,4 +10,6 @@ import java.util.List;
 public interface MeetRepository extends JpaRepository<MeetEntity, Long> {
 
     List<MeetEntity> findFirst4ByOrderByIdAsc();
+
+    List<MeetEntity> findByAnnouncer_Id(Long id);
 }

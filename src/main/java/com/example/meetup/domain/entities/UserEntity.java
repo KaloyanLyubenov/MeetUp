@@ -8,6 +8,7 @@ import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
 @Entity
 @Builder
 @Table(name = "users")
@@ -40,34 +41,6 @@ public class UserEntity extends BaseEntity{
     public UserEntity setProfilePicture(PictureEntity profilePicture) {
         this.profilePicture = profilePicture;
         return this;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public List<MeetEntity> getAnnouncedMeets() {
-        return announcedMeets;
-    }
-
-    public List<UserRoleEntity> getRoles() {
-        return roles;
     }
 
     public UserEntity setUsername(String username) {
@@ -104,4 +77,6 @@ public class UserEntity extends BaseEntity{
         this.roles = roles;
         return this;
     }
+
+
 }

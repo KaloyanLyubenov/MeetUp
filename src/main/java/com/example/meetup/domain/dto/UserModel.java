@@ -65,4 +65,9 @@ public class UserModel {
         this.roles = roles;
         return this;
     }
+
+    public UserModel setProfilePicture(PictureModel profilePicture) {
+        this.profilePicture = profilePicture;
+        return this;
+    }
 }
