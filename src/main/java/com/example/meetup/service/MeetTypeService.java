@@ -1,6 +1,6 @@
 package com.example.meetup.service;
 
-import com.example.meetup.domain.dto.MeetTypeModel;
+import com.example.meetup.domain.dto.models.MeetTypeModel;
 import com.example.meetup.domain.entities.MeetTypeEntity;
 import com.example.meetup.domain.enums.MeetTypeEnum;
 import com.example.meetup.repository.MeetTypeRepository;

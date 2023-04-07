@@ -1,6 +1,5 @@
 package com.example.meetup.domain.dto.binding;
 
-import com.example.meetup.domain.dto.PictureModel;
 import com.example.meetup.domain.entities.BaseEntity;
 import com.example.meetup.validations.passwordMatcher.PasswordMatch;
 import lombok.Getter;

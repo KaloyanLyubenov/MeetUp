@@ -1,6 +1,5 @@
-package com.example.meetup.domain.dto;
+package com.example.meetup.domain.dto.models;
 
-import com.example.meetup.domain.entities.MeetEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

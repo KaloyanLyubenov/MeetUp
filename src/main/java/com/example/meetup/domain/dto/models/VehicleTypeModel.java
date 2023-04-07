@@ -1,10 +1,9 @@
-package com.example.meetup.domain.dto;
+package com.example.meetup.domain.dto.models;
 
 import com.example.meetup.domain.enums.VehicleTypeEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Getter
 @NoArgsConstructor

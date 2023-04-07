@@ -27,6 +27,8 @@ public class MeetDetailsView {
     private String announcer;
     private List<String> pictureUrls = new ArrayList<>();
     private String thumbnailUrl;
+    private List<Long> participantIds;
+    private Boolean viewerParticipates;
 
     public MeetDetailsView setId(Long id) {
         this.id = id;
@@ -70,6 +72,26 @@ public class MeetDetailsView {
 
     public MeetDetailsView setThumbnailUrl(String thumbnailUrl) {
         this.thumbnailUrl = thumbnailUrl;
+        return this;
+    }
+
+    public MeetDetailsView setViewerParticipates(Long viewerId) {
+        if(this.participantIds.contains(viewerId)){
+            this.viewerParticipates = true;
+        }else{
+            this.viewerParticipates = false;
+        }
+
+        return this;
+    }
+
+    public MeetDetailsView setParticipantIds(List<Long> participantIds) {
+        this.participantIds = participantIds;
+        return this;
+    }
+
+    public MeetDetailsView setViewerParticipates(Boolean viewerParticipates) {
+        this.viewerParticipates = viewerParticipates;
         return this;
     }
 }

@@ -11,5 +11,5 @@ public interface MeetRepository extends JpaRepository<MeetEntity, Long> {
 
     List<MeetEntity> findFirst4ByOrderByIdAsc();
 
-    List<MeetEntity> findByAnnouncer_Id(Long id);
+    List<MeetEntity> findAllByAnnouncer_Id(Long id);
 }

@@ -1,12 +1,15 @@
 package com.example.meetup.web;
 
+import com.example.meetup.domain.customExceptions.ObjectNotFoundException;
 import com.example.meetup.domain.dto.views.UserIndexView;
 import com.example.meetup.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
@@ -37,11 +40,13 @@ public class AdminController {
         return "redirect:/admins";
     }
 
-    @GetMapping("/moderators/add/{id}")
-    public String makeModerator(@PathVariable("id") Long userId){
-        this.userService.makeModerator(userId);
+    @ExceptionHandler(ObjectNotFoundException.class)
+    public ModelAndView onObjectNotFound(ObjectNotFoundException onfe){
+        ModelAndView model = new ModelAndView("object-not-found");
 
-        return "redirect:/admins";
+        model.addObject("objectId", onfe.getIdentifier());
+
+        return model;
     }
 
 }

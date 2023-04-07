@@ -14,6 +14,6 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
     Optional<UserEntity> findUserEntityByUsername(String username);
 
     @Query("SELECT u FROM UserEntity u JOIN u.announcedMeets m WHERE m.id = :meetId")
-    UserEntity findByMeeId(@Param("meetId") Long meetId);
+    UserEntity findByMeetId(@Param("meetId") Long meetId);
 
 }

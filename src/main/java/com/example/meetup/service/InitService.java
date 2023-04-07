@@ -1,8 +1,8 @@
 package com.example.meetup.service;
 
-import com.example.meetup.domain.dto.MeetTypeModel;
-import com.example.meetup.domain.dto.UserRoleModel;
-import com.example.meetup.domain.dto.VehicleTypeModel;
+import com.example.meetup.domain.dto.models.MeetTypeModel;
+import com.example.meetup.domain.dto.models.UserRoleModel;
+import com.example.meetup.domain.dto.models.VehicleTypeModel;
 import com.example.meetup.domain.entities.*;
 import com.example.meetup.domain.enums.MeetTypeEnum;
 import com.example.meetup.domain.enums.UserRoleEnum;
@@ -91,7 +91,8 @@ public class InitService {
                 .setFirstName("admin")
                 .setLastName("admin")
                 .setRoles(userRoleRepository.findAll())
-                .setProfilePicture(this.pictureRepository.findById((long)1).get());
+                .setProfilePicture(this.modelMapper.map(this.pictureRepository.findById((long)1), PictureEntity.class));
+
         userRepository.save(adminUser);
     }
 
@@ -106,7 +107,7 @@ public class InitService {
                 .setFirstName("mod")
                 .setLastName("mod")
                 .setRoles(List.of(moderatorRole))
-                .setProfilePicture(this.pictureRepository.findById((long)1).get());
+                .setProfilePicture(this.modelMapper.map(this.pictureRepository.findById((long)1), PictureEntity.class));
 
         userRepository.save(moderatorUser);
     }
@@ -118,15 +119,17 @@ public class InitService {
                 .setEmail("user@example.com")
                 .setFirstName("user")
                 .setLastName("user")
-                .setProfilePicture(this.pictureRepository.findById((long)1).get());
+                .setProfilePicture(this.modelMapper.map(this.pictureRepository.findById((long)1), PictureEntity.class));
 
         userRepository.save(moderatorUser);
     }
 
     private void initDefaultPicture(){
-        PictureEntity picture = new PictureEntity()
-                .setUrl("https://res.cloudinary.com/ddwhij8d7/image/upload/v1679322618/icon-256x256_fpo48i.png");
+        if(this.pictureRepository.count() == 0) {
+            PictureEntity picture = new PictureEntity()
+                    .setUrl("https://res.cloudinary.com/ddwhij8d7/image/upload/v1679322618/icon-256x256_fpo48i.png");
 
-        this.pictureRepository.save(picture);
+            this.pictureRepository.save(picture);
+        }
     }
 }

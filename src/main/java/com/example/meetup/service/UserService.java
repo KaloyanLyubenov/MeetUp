@@ -1,12 +1,15 @@
 package com.example.meetup.service;
 
-import com.example.meetup.domain.dto.UserModel;
+import com.example.meetup.domain.customExceptions.ObjectNotFoundException;
+import com.example.meetup.domain.dto.models.UserModel;
+import com.example.meetup.domain.dto.binding.UserEditDTO;
 import com.example.meetup.domain.dto.binding.UserRegisterDTO;
 import com.example.meetup.domain.dto.views.UserIndexView;
 import com.example.meetup.domain.entities.PictureEntity;
 import com.example.meetup.domain.entities.UserEntity;
 import com.example.meetup.domain.entities.UserRoleEntity;
 import com.example.meetup.domain.enums.UserRoleEnum;
+import com.example.meetup.repository.PictureRepository;
 import com.example.meetup.repository.UserRepository;
 import com.example.meetup.repository.UserRoleRepository;
 import org.modelmapper.ModelMapper;
@@ -22,6 +25,9 @@ import java.util.List;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
+//ErrorHandling implemented
+
+
 @Service
 public class UserService {
 
@@ -31,9 +37,10 @@ public class UserService {
     private final ModelMapper modelMapper;
     private final ImageCloudService imageCloudService;
     private final UserRoleRepository userRoleRepository;
+    private final PictureRepository pictureRepository;
 
     @Autowired
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, UserDetailsService userDetailsService, ModelMapper modelMapper, ImageCloudService imageCloudService, UserRoleRepository userRoleRepository) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, UserDetailsService userDetailsService, ModelMapper modelMapper, ImageCloudService imageCloudService, UserRoleRepository userRoleRepository, PictureRepository pictureRepository) {
 
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
@@ -41,6 +48,7 @@ public class UserService {
         this.modelMapper = modelMapper;
         this.imageCloudService = imageCloudService;
         this.userRoleRepository = userRoleRepository;
+        this.pictureRepository = pictureRepository;
     }
 
     public void registerUser(UserRegisterDTO userRegisterDTO,
@@ -48,6 +56,8 @@ public class UserService {
 
         PictureEntity profPic = new PictureEntity()
                 .setUrl(imageCloudService.saveImage(userRegisterDTO.getProfilePicture()));
+
+        this.pictureRepository.save(profPic);
 
         UserEntity user = new UserEntity()
                 .setUsername(userRegisterDTO.getUsername())
@@ -72,19 +82,33 @@ public class UserService {
     }
 
     public UserModel getUserByUsername(String username){
-        return this.modelMapper.map(this.userRepository.findUserEntityByUsername(username).orElse(new UserEntity()), UserModel.class);
+        UserModel user = this.modelMapper.map(this.userRepository.findUserEntityByUsername(username), UserModel.class);
+
+        if(user == null){
+            throw new ObjectNotFoundException(username, "Username", "User");
+        }
+
+        return user;
     }
 
     public UserModel getUserById(Long id){
-        UserEntity user = this.userRepository.findById(id).get();
+        UserModel userToReturn = this.modelMapper.map(this.userRepository.findById(id), UserModel.class);
 
-        UserModel userToReturn = this.modelMapper.map(user, UserModel.class);
+        if(userToReturn == null){
+            throw new ObjectNotFoundException(id.toString(), "ID", "User");
+        }
 
         return userToReturn;
     }
 
     public UserModel getUserByMeetId(Long meetId){
-        return this.modelMapper.map(this.userRepository.findByMeeId(meetId), UserModel.class);
+        UserModel user = this.modelMapper.map(this.userRepository.findByMeetId(meetId), UserModel.class);
+
+        if(user == null){
+            throw new ObjectNotFoundException(meetId.toString(), "MeetID", "User");
+        }
+
+        return user;
     }
 
     public List<UserIndexView> getAllUsersIndexView(){
@@ -101,8 +125,14 @@ public class UserService {
     }
 
     public void makeAdmin(Long userId){
-        UserEntity user = this.userRepository.findById(userId).get();
-        UserRoleEntity adminEntity = this.userRoleRepository.findByUserRole(UserRoleEnum.ADMIN).get();
+        UserEntity user = this.modelMapper.map(this.userRepository.findById(userId), UserEntity.class);
+
+
+        if(user == null){
+            throw new ObjectNotFoundException(userId.toString(), "ID", "User");
+        }
+
+        UserRoleEntity adminEntity = this.modelMapper.map(this.userRoleRepository.findByUserRole(UserRoleEnum.ADMIN), UserRoleEntity.class);
 
         user.getRoles().add(adminEntity);
 
@@ -110,7 +140,12 @@ public class UserService {
     }
 
     public void removeAdmin(Long userId){
-        UserEntity user = this.userRepository.findById(userId).get();
+        UserEntity user = this.modelMapper.map(this.userRepository.findById(userId), UserEntity.class);
+
+        if(user == null){
+            throw new ObjectNotFoundException(userId.toString(), "ID", "User");
+        }
+
         UserRoleEntity adminEntity = this.userRoleRepository.findByUserRole(UserRoleEnum.ADMIN).get();
 
         user.getRoles().remove(adminEntity);
@@ -119,7 +154,12 @@ public class UserService {
     }
 
     public void makeModerator(Long userId){
-        UserEntity user = this.userRepository.findById(userId).get();
+        UserEntity user = this.modelMapper.map(this.userRepository.findById(userId), UserEntity.class);
+
+        if(user == null){
+            throw new ObjectNotFoundException(userId.toString(), "ID", "User");
+        }
+
         UserRoleEntity moderatorEntity = this.userRoleRepository.findByUserRole(UserRoleEnum.MODERATOR).get();
 
         user.getRoles().add(moderatorEntity);
@@ -128,11 +168,37 @@ public class UserService {
     }
 
     public void removeModerator(Long userId){
-        UserEntity user = this.userRepository.findById(userId).get();
+        UserEntity user = this.modelMapper.map(this.userRepository.findById(userId), UserEntity.class);
+
+        if(user == null){
+            throw new ObjectNotFoundException(userId.toString(), "ID", "User");
+        }
+
         UserRoleEntity moderatorEntity = this.userRoleRepository.findByUserRole(UserRoleEnum.MODERATOR).get();
 
         user.getRoles().remove(moderatorEntity);
 
         this.userRepository.saveAndFlush(user);
+    }
+
+    public UserEditDTO getUserToEdit(Long id){
+        UserEditDTO user = this.modelMapper.map(this.userRepository.findById(id), UserEditDTO.class);
+
+        if(user == null){
+            throw new ObjectNotFoundException(id.toString(), "ID", "User");
+        }
+
+        return user;
+    }
+
+    public void saveEditedUser(UserEditDTO editedUser){
+        UserEntity userToSave = this.modelMapper.map(this.userRepository.findById(editedUser.getId()), UserEntity.class);
+
+        userToSave.setUsername(editedUser.getUsername())
+                .setFirstName(editedUser.getFirstName())
+                .setLastName(editedUser.getLastName())
+                .setEmail(editedUser.getEmail());
+
+        this.userRepository.saveAndFlush(userToSave);
     }
 }

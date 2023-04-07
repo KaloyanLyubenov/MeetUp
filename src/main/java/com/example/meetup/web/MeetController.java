@@ -1,15 +1,13 @@
 package com.example.meetup.web;
 
-import com.example.meetup.domain.dto.MeetModel;
-import com.example.meetup.domain.dto.MeetTypeModel;
-import com.example.meetup.domain.dto.VehicleTypeModel;
+import com.example.meetup.domain.customExceptions.ObjectNotFoundException;
+import com.example.meetup.domain.dto.binding.AddCommentDTO;
 import com.example.meetup.domain.dto.binding.AddMeetDTO;
 import com.example.meetup.domain.dto.binding.AddPictureDTO;
 import com.example.meetup.domain.dto.binding.EditMeetDTO;
 import com.example.meetup.domain.dto.views.MeetDetailsView;
 import com.example.meetup.domain.dto.views.MeetIndexView;
-import com.example.meetup.domain.enums.MeetTypeEnum;
-import com.example.meetup.domain.enums.VehicleTypeEnum;
+import com.example.meetup.service.CommentService;
 import com.example.meetup.service.MeetService;
 import com.example.meetup.service.PictureService;
 import com.example.meetup.service.UserService;
@@ -18,8 +16,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -29,14 +29,15 @@ public class MeetController {
     public final MeetService meetService;
     private final PictureService pictureService;
     private final UserService userService;
+    private final CommentService commentService;
 
     @Autowired
-    public MeetController(MeetService meetService, PictureService pictureService, UserService userService) {
+    public MeetController(MeetService meetService, PictureService pictureService, UserService userService, CommentService commentService) {
         this.meetService = meetService;
         this.pictureService = pictureService;
         this.userService = userService;
+        this.commentService = commentService;
     }
-
 
     @GetMapping("/add")
     public String getAddMeet(@ModelAttribute(name = "addMeetModel") AddMeetDTO addMeetDTO){
@@ -72,13 +73,22 @@ public class MeetController {
     }
 
     @GetMapping("/details/{id}")
-    public String getMeetDetails(@PathVariable("id") Long meetId, Model model, AddPictureDTO addPictureDTO){
+    public String getMeetDetails(@PathVariable("id") Long meetId, Model model,
+                                 AddPictureDTO addPictureDTO, Principal principal, AddCommentDTO addCommentDTO){
         MeetDetailsView meet = this.meetService.getMeetDetails(meetId);
+        meet.setViewerParticipates(false);
+
+        if(principal != null){
+            Long loggedUserId = this.userService.getUserByUsername(principal.getName()).getId();
+            meet.setViewerParticipates(meet.getParticipantIds().contains(loggedUserId));
+        }
 
         addPictureDTO.setIdOfMeet(meetId);
+        addCommentDTO.setMeetId(meetId);
 
         model.addAttribute("meet", meet);
         model.addAttribute("addPictureDTO", addPictureDTO);
+        model.addAttribute("addCommentDTO", addCommentDTO);
 
         return "meet-details";
     }
@@ -119,4 +129,37 @@ public class MeetController {
         return "redirect:/";
     }
 
+    @GetMapping("/add-participant/{id}")
+    public String addParticipant(@PathVariable("id") Long meetId, Principal principal){
+        this.meetService.addParticipant(meetId, this.userService.getUserByUsername(principal.getName()).getId());
+
+        return "redirect:/meets/details/{id}";
+    }
+
+    @GetMapping("/remove-participant/{id}")
+    public String removeParticipant(@PathVariable("id") Long meetId, Principal principal){
+        this.meetService.removeParticipant(meetId, this.userService.getUserByUsername(principal.getName()).getId());
+
+        return "redirect:/meets/details/{id}";
+    }
+
+    @GetMapping("/comments/{id}")
+    public String loadComments(@PathVariable("id") Long meetId, Model model, AddCommentDTO addCommentDTO){
+        MeetDetailsView meet = this.meetService.getMeetDetails(meetId);
+        addCommentDTO.setMeetId(meetId);
+
+        model.addAttribute("meet", meet);
+        model.addAttribute("addCommentDTO", addCommentDTO);
+
+        return "meet-details-comments";
+    }
+
+    @ExceptionHandler(ObjectNotFoundException.class)
+    public ModelAndView onObjectNotFound(ObjectNotFoundException onfe){
+        ModelAndView model = new ModelAndView("object-not-found");
+
+        model.addObject("objectId", onfe.getIdentifier());
+
+        return model;
+    }
 }

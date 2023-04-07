@@ -1,6 +1,6 @@
 package com.example.meetup.service;
 
-import com.example.meetup.domain.dto.VehicleTypeModel;
+import com.example.meetup.domain.dto.models.VehicleTypeModel;
 import com.example.meetup.domain.entities.VehicleTypeEntity;
 import com.example.meetup.domain.enums.VehicleTypeEnum;
 import com.example.meetup.repository.VehicleTypeRepository;

@@ -1,10 +1,6 @@
-package com.example.meetup.domain.dto;
+package com.example.meetup.domain.dto.models;
 
 
-import com.example.meetup.domain.entities.PictureEntity;
-import com.example.meetup.domain.entities.UserEntity;
-import com.example.meetup.domain.enums.MeetTypeEnum;
-import com.example.meetup.domain.enums.VehicleTypeEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,6 +22,8 @@ public class MeetModel {
     private UserModel announcer;
     private List<PictureModel> pictures;
     private PictureModel thumbnail;
+    private List<UserModel> participants;
+    private List<CommentModel> comments;
 
 
     public MeetModel setId(Long id) {
@@ -70,6 +68,16 @@ public class MeetModel {
 
     public MeetModel setThumbnail(PictureModel thumbnail) {
         this.thumbnail = thumbnail;
+        return this;
+    }
+
+    public MeetModel setParticipants(List<UserModel> participants) {
+        this.participants = participants;
+        return this;
+    }
+
+    public MeetModel setComments(List<CommentModel> comments) {
+        this.comments = comments;
         return this;
     }
 }

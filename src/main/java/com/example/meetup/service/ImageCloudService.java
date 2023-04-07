@@ -2,6 +2,8 @@ package com.example.meetup.service;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import com.example.meetup.domain.entities.PictureEntity;
+import com.example.meetup.repository.PictureRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -14,9 +16,9 @@ import java.util.UUID;
 @Service
 public class ImageCloudService {
 
-    private Cloudinary cloudinary;
+    private final Cloudinary cloudinary;
 
-    public ImageCloudService() {
+    public ImageCloudService(PictureRepository pictureRepository) {
         this.cloudinary = new Cloudinary(ObjectUtils.asMap(
                 "cloud_name", "ddwhij8d7",
                 "api_key", "449948567675992",

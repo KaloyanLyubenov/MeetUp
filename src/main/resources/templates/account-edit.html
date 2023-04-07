@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/head :: head}"></head>
+
+<body>
+
+<!-- ***** Preloader Start ***** -->
+<div th:replace="~{fragments/preloader :: preloader}"></div>
+<!-- ***** Preloader End ***** -->
+
+<!-- ***** Header Area Start ***** -->
+<header th:replace="~{fragments/navbar :: navbar}"></header>
+<!-- ***** Header Area End ***** -->
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="page-content">
+
+        <div class="most-popular">
+          <div class="row" >
+            <div class="col-lg-12" th:object="${userToEdit}">
+              <div class="heading-section">
+                <h4>Register User</h4>
+              </div>
+              <form th:action="@{/users/edit/{id}(id=*{id})}"
+                    th:method="POST"
+                    th:object="${userToEdit}"
+                    enctype="multipart/form-data"
+                    class="main-form mx-auto col-md-8 d-flex flex-column justify-content-center">
+
+                <div class="row">
+                  <div class="form-group col-lg-6 mb-3">
+                    <h4 for="firstName" class="header-text">First name:</h4>
+                    <input
+                            id="firstName"
+                            name="firstName"
+                            type="text"
+                            th:value="*{firstName}"
+                            class="form-control"
+                            placeholder="First name"/>
+                  </div>
+                  <div class="form-group col-lg-6 mb-3">
+                    <h4 for="lastName" class="header-text">Last name:</h4>
+                    <input id="lastName"
+                           name="lastName"
+                           th:value="*{lastName}"
+                           type="text" min="2" max="20" class="form-control"
+                           placeholder="Last name"/>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="form-group col-lg-6 mb-3">
+                    <h4 for="username" class="header-text">Username:</h4>
+                    <input id="username"
+                           name="username"
+                           th:value="*{username}"
+                           type="text" min="2" max="20" class="form-control"
+                           placeholder="Username"/>
+                  </div>
+                  <div class="form-group col-lg-6 mb-3">
+                    <h4 for="email" class="header-text">Email:</h4>
+                    <input id="email"
+                           name="email"
+                           th:value="*{email}"
+                           type="email" min="2" max="20" class="form-control"
+                           placeholder="email"/>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col col-md-4">
+                    <div class="button-holder d-flex">
+                      <input type="submit" class="btn btn-info btn-lg" value="Create account"/>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+<!-- Scripts -->
+<!-- Bootstrap core JavaScript -->
+<div th:replace="~{fragments/scripts :: scripts}"></div>
+
+</body>
+
+</html>

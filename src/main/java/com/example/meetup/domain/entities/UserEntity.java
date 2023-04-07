@@ -36,7 +36,8 @@ public class UserEntity extends BaseEntity{
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     private List<UserRoleEntity> roles = new ArrayList<>();
 
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    @JoinColumn(name = "picture_id")
     private PictureEntity profilePicture;
 
     public UserEntity setProfilePicture(PictureEntity profilePicture) {
@@ -80,18 +81,12 @@ public class UserEntity extends BaseEntity{
     }
 
     public Boolean isAdmin(){
-        if(this.getRoles().stream()
-                .anyMatch(role -> role.getUserRole() == UserRoleEnum.ADMIN)){
-            return true;
-        }
-        return false;
+        return this.getRoles().stream()
+                .anyMatch(role -> role.getUserRole() == UserRoleEnum.ADMIN);
     }
     public Boolean isModerator(){
-        if(this.getRoles().stream()
-                .anyMatch(role -> role.getUserRole() == UserRoleEnum.MODERATOR)){
-            return true;
-        }
-        return false;
+        return this.getRoles().stream()
+                .anyMatch(role -> role.getUserRole() == UserRoleEnum.MODERATOR);
     }
 
 

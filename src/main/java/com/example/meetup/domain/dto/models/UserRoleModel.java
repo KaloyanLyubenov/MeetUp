@@ -1,4 +1,4 @@
-package com.example.meetup.domain.dto;
+package com.example.meetup.domain.dto.models;
 
 import com.example.meetup.domain.enums.UserRoleEnum;
 import lombok.AllArgsConstructor;

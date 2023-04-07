@@ -6,16 +6,7 @@
 <body>
 
 <!-- ***** Preloader Start ***** -->
-<div id="js-preloader" class="js-preloader">
-  <div class="preloader-inner">
-    <span class="dot"></span>
-    <div class="dots">
-      <span></span>
-      <span></span>
-      <span></span>
-    </div>
-  </div>
-</div>
+<div th:replace="~{fragments/preloader :: preloader}"></div>
 <!-- ***** Preloader End ***** -->
 
 <!-- ***** Header Area Start ***** -->
@@ -39,13 +30,14 @@
                   <div class="main-info header-text">
                     <h4 th:text="*{fullName}">User user</h4>
                     <div class="main-border-button">
-                      <a th:href="@{/meets/add}">Add new meet</a>
+                      <a th:href="@{/users/edit/{id}(id=*{id})}">Edit Account</a>
                     </div>
                   </div>
                 </div>
                 <div class="col-lg-4 align-self-center">
                   <ul>
                     <li>Meets announced <span th:text="*{meetsAmnt}">0</span></li>
+                    <li><div class="main-border-button"><a th:href="@{/meets/add}">Add new meet</a></div></li>
                   </ul>
                 </div>
               </div>
@@ -78,18 +70,7 @@
   </div>
 </div>
 
-<footer>
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-12">
-        <p>Copyright © 2036 <a href="#">Cyborg Gaming</a> Company. All rights reserved.
-
-          <br>Design: <a href="https://templatemo.com" target="_blank" title="free CSS templates">TemplateMo</a>  Distributed By <a href="https://themewagon.com" target="_blank" >ThemeWagon</a></p>
-      </div>
-    </div>
-  </div>
-</footer>
-
+<footer th:replace="~{fragments/footer :: footer}"></footer>
 
 <!-- Scripts -->
 <!-- Bootstrap core JavaScript -->

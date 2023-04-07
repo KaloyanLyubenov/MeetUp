@@ -34,11 +34,17 @@ public class MeetEntity extends BaseEntity{
     @ManyToOne
     private UserEntity announcer;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<PictureEntity> pictures = new ArrayList<>();
 
     @OneToOne
     private PictureEntity thumbnail;
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<UserEntity> participants = new ArrayList<>();
+
+    @OneToMany(fetch = FetchType.EAGER)
+    private List<CommentEntity> comments;
 
     public MeetEntity setPictures(List<PictureEntity> pictures) {
         this.pictures = pictures;
@@ -84,6 +90,28 @@ public class MeetEntity extends BaseEntity{
 
     public MeetEntity setThumbnail(PictureEntity thumbnail) {
         this.thumbnail = thumbnail;
+        return this;
+    }
+
+    public MeetEntity setParticipants(List<UserEntity> participants) {
+        this.participants = participants;
+        return this;
+    }
+
+    public MeetEntity addParticipant(UserEntity user){
+        this.participants.add(user);
+
+        return this;
+    }
+
+    public MeetEntity removeParticipant(UserEntity user){
+        this.participants.remove(user);
+
+        return this;
+    }
+
+    public MeetEntity setComments(List<CommentEntity> comments) {
+        this.comments = comments;
         return this;
     }
 }

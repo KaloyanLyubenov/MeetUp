@@ -24,7 +24,7 @@ public class PictureService {
 
     public void addPicture(AddPictureDTO addPictureDTO){
         PictureEntity picture = new PictureEntity()
-                .setUrl(imageCloudService.saveImage(addPictureDTO.getImage()));
+                .setUrl(this.imageCloudService.saveImage(addPictureDTO.getImage()));
 
         MeetEntity meet = this.meetRepository.findById(addPictureDTO.getIdOfMeet()).get();
 
