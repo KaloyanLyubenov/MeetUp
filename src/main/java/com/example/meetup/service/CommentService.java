@@ -35,7 +35,7 @@ public class CommentService {
     public List<CommentEntity> getCommentsByMeetId(Long meetId){
         List<CommentEntity> meets = this.commentRepository.findAllByMeet_Id(meetId);
 
-        if(meets == null){
+        if(meets.isEmpty()){
             throw new ObjectNotFoundException(meetId.toString(), "MeetID", "List of Comments");
         }
 

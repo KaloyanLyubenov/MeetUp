@@ -123,8 +123,6 @@ public class MeetService {
         List<Long> participantIds = meet.getParticipants()
                 .stream().map(BaseEntity::getId).toList();
 
-        UserModel announcer = this.userService.getUserById(meet.getAnnouncer().getId());
-
         return new MeetDetailsView()
                 .setId(meet.getId())
                 .setMeetTitle(meet.getMeetTitle())
@@ -132,7 +130,7 @@ public class MeetService {
                 .setVehicleType(meet.getVehicleType().toString())
                 .setDescription(meet.getDescription())
                 .setDate(meet.getDate())
-                .setAnnouncer(announcer.getFirstName() + " " + announcer.getLastName())
+                .setAnnouncer(meet.getAnnouncer().getFirstName() + " " + meet.getAnnouncer().getLastName())
                 .setPictureUrls(pictureUrls)
                 .setThumbnailUrl(meet.getThumbnail().getUrl())
                 .setParticipantIds(participantIds);
@@ -183,7 +181,7 @@ public class MeetService {
     public List<MeetIndexView> getMeetsIndexViewByAnnouncerId(Long announcerId){
         List<MeetEntity> meets = this.meetRepository.findAllByAnnouncer_Id(announcerId);
 
-        if(meets == null){
+        if(meets.isEmpty()){
             throw new ObjectNotFoundException(announcerId.toString(), "AnnouncerID", "List of Meets");
         }
 

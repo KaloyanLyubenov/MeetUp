@@ -22,4 +22,9 @@ public class MeetTypeModel {
         this.meetType = meetType;
         return this;
     }
+
+    @Override
+    public String toString(){
+        return this.meetType.name();
+    }
 }

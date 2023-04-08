@@ -54,10 +54,15 @@ public class UserService {
     public void registerUser(UserRegisterDTO userRegisterDTO,
                              Consumer<Authentication> successfulLoginProcessor){
 
-        PictureEntity profPic = new PictureEntity()
+        PictureEntity profPic;
+        if(userRegisterDTO.getProfilePicture() != null) {
+            profPic = new PictureEntity()
                 .setUrl(imageCloudService.saveImage(userRegisterDTO.getProfilePicture()));
 
-        this.pictureRepository.save(profPic);
+            this.pictureRepository.save(profPic);
+        }else{
+            profPic = this.modelMapper.map(this.pictureRepository.findById((long)1), PictureEntity.class);
+        }
 
         UserEntity user = new UserEntity()
                 .setUsername(userRegisterDTO.getUsername())
@@ -99,16 +104,6 @@ public class UserService {
         }
 
         return userToReturn;
-    }
-
-    public UserModel getUserByMeetId(Long meetId){
-        UserModel user = this.modelMapper.map(this.userRepository.findByMeetId(meetId), UserModel.class);
-
-        if(user == null){
-            throw new ObjectNotFoundException(meetId.toString(), "MeetID", "User");
-        }
-
-        return user;
     }
 
     public List<UserIndexView> getAllUsersIndexView(){

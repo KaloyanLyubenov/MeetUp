@@ -22,4 +22,9 @@ public class VehicleTypeModel {
         this.vehicleType = vehicleType;
         return this;
     }
+
+    @Override
+    public String toString(){
+        return this.vehicleType.name();
+    }
 }

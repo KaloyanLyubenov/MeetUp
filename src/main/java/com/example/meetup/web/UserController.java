@@ -29,10 +29,10 @@ public class UserController {
         this.meetService = meetService;
     }
 
-    @GetMapping("/users/account/{id}")
-    public String getAccount(@PathVariable("id") Long userId, Model model){
-        UserModel user = this.userService.getUserById(userId);
-        List<MeetIndexView> meets = this.meetService.getMeetsIndexViewByAnnouncerId(userId);
+    @GetMapping("/users/account/{username}")
+    public String getAccount(@PathVariable("username") String username, Model model){
+        UserModel user = this.userService.getUserByUsername(username);
+        List<MeetIndexView> meets = this.meetService.getMeetsIndexViewByAnnouncerId(user.getId());
 
         UserAccountView userAccountView = new UserAccountView()
                 .setId(user.getId())

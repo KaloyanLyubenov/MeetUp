@@ -40,6 +40,13 @@ public class AdminController {
         return "redirect:/admins";
     }
 
+    @GetMapping("/admins/remove/{id}")
+    public String removeAdmin(@PathVariable("id") Long userId){
+        this.userService.removeAdmin(userId);
+
+        return "redirect:/admins";
+    }
+
     @ExceptionHandler(ObjectNotFoundException.class)
     public ModelAndView onObjectNotFound(ObjectNotFoundException onfe){
         ModelAndView model = new ModelAndView("object-not-found");

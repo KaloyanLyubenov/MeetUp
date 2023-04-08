@@ -7,7 +7,6 @@ import com.example.meetup.domain.dto.binding.AddPictureDTO;
 import com.example.meetup.domain.dto.binding.EditMeetDTO;
 import com.example.meetup.domain.dto.views.MeetDetailsView;
 import com.example.meetup.domain.dto.views.MeetIndexView;
-import com.example.meetup.service.CommentService;
 import com.example.meetup.service.MeetService;
 import com.example.meetup.service.PictureService;
 import com.example.meetup.service.UserService;
@@ -26,17 +25,15 @@ import java.util.List;
 @RequestMapping("/meets")
 public class MeetController {
 
-    public final MeetService meetService;
+    private final MeetService meetService;
     private final PictureService pictureService;
     private final UserService userService;
-    private final CommentService commentService;
 
     @Autowired
-    public MeetController(MeetService meetService, PictureService pictureService, UserService userService, CommentService commentService) {
+    public MeetController(MeetService meetService, PictureService pictureService, UserService userService) {
         this.meetService = meetService;
         this.pictureService = pictureService;
         this.userService = userService;
-        this.commentService = commentService;
     }
 
     @GetMapping("/add")

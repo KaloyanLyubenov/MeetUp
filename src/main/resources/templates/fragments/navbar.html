@@ -33,7 +33,7 @@
                                 <input class="btn btn-link nav-link" type="submit" value="Logout">
                             </form>
                         </li>
-                        <li><a th:href="@{/users/account/{id}(id=${#authentication.principal.entityId})}" sec:authorize="isAuthenticated()">
+                        <li><a th:href="@{/users/account/{username}(username=${#authentication.principal.username})}" sec:authorize="isAuthenticated()">
                             <th:block sec:authentication="principal.username"></th:block>
                             <img th:src="@{/images/profile-header.jpg}" alt=""></a>
                         </li>

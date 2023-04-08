@@ -42,6 +42,13 @@ public class ModeratorController {
         return "redirect:/moderators";
     }
 
+    @GetMapping("/moderators/remove/{id}")
+    public String removeModerator(@PathVariable("id") Long userId){
+        this.userService.removeModerator(userId);
+
+        return "redirect:/moderators";
+    }
+
     @ExceptionHandler(ObjectNotFoundException.class)
     public ModelAndView onObjectNotFound(ObjectNotFoundException onfe){
         ModelAndView model = new ModelAndView("object-not-found");
