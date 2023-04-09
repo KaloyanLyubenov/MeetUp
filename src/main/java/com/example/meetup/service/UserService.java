@@ -143,7 +143,10 @@ public class UserService {
 
         UserRoleEntity adminEntity = this.userRoleRepository.findByUserRole(UserRoleEnum.ADMIN).get();
 
-        user.getRoles().remove(adminEntity);
+        List<UserRoleEntity> roles = user.getRoles();
+        roles.remove(adminEntity);
+        user.getRoles().clear();
+        user.setRoles(roles);
 
         this.userRepository.saveAndFlush(user);
     }
@@ -171,7 +174,10 @@ public class UserService {
 
         UserRoleEntity moderatorEntity = this.userRoleRepository.findByUserRole(UserRoleEnum.MODERATOR).get();
 
-        user.getRoles().remove(moderatorEntity);
+        List<UserRoleEntity> roles = user.getRoles();
+        roles.remove(moderatorEntity);
+        user.getRoles().clear();
+        user.setRoles(roles);
 
         this.userRepository.saveAndFlush(user);
     }

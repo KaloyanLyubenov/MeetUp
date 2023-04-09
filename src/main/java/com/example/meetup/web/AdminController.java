@@ -44,7 +44,7 @@ public class AdminController {
     public String removeAdmin(@PathVariable("id") Long userId){
         this.userService.removeAdmin(userId);
 
-        return "redirect:/admins";
+        return "redirect:/";
     }
 
     @ExceptionHandler(ObjectNotFoundException.class)

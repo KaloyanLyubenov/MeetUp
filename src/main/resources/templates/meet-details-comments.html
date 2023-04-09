@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 
 <head th:replace="~{fragments/head :: head}"></head>
@@ -38,32 +39,34 @@
                 <div class="most-popular">
                     <div class="row">
                         <div class="col-lg-12" id="commentCtnr">
-                            <form id="commentForm"
-                                  th:action="@{/comments/add/{id}(id=*{meetId})}"
-                                  th:method="POST"
-                                  th:object="${addCommentDTO}">
-                                <div class="form-group">
-                                    <h4>Leave a comment</h4>
-                                    <label for="content">Message</label>
-                                    <textarea name="content"
-                                              id="content"
-                                              cols="30"
-                                              rows="5"
-                                              class="form-control"
-                                              style="background-color: white;"></textarea>
-                                    <small id="contentError" class="invalid-feedback">
-                                        Comment should be at least 10 characters.
-                                    </small>
-                                </div>
+                            <div sec:authorize="isAuthenticated()">
+                                <form id="commentForm"
+                                      th:action="@{/comments/add/{id}(id=*{meetId})}"
+                                      th:method="POST"
+                                      th:object="${addCommentDTO}">
+                                    <div class="form-group">
+                                        <h4>Leave a comment</h4>
+                                        <label for="content">Message</label>
+                                        <textarea name="content"
+                                                  id="content"
+                                                  cols="30"
+                                                  rows="5"
+                                                  class="form-control"
+                                                  style="background-color: white;"></textarea>
+                                        <small id="contentError" class="invalid-feedback">
+                                            Comment should be at least 10 characters.
+                                        </small>
+                                    </div>
 
-                                <div class="row">
-                                    <div class="col-12">
-                                        <div class="main-button">
-                                            <input type="submit" class="btn btn-info btn-lg" id="comment-input" value="Add comment"/>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="main-button">
+                                                <input type="submit" class="btn btn-info btn-lg" id="comment-input" value="Add comment"/>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </form>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>

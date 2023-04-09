@@ -9,6 +9,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
 
@@ -29,7 +30,7 @@ public class AdminControllerIT {
 
     @Test
     @WithMockUser(username = "test", roles = {"ADMIN"})
-    public void testGetAdmins() throws Exception {
+    void testGetAdmins() throws Exception {
         UserIndexView testUserIndexView = new UserIndexView()
                 .setId((long)1)
                 .setUsername("testMan")
@@ -46,4 +47,8 @@ public class AdminControllerIT {
         mockMvc.perform(get("/admins"))
                 .andExpect(status().isOk());
     }
+
+
+
+
 }

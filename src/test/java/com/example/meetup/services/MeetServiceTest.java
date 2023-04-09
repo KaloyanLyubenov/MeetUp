@@ -14,6 +14,7 @@ import com.example.meetup.domain.enums.MeetTypeEnum;
 import com.example.meetup.domain.enums.VehicleTypeEnum;
 import com.example.meetup.repository.CommentRepository;
 import com.example.meetup.repository.MeetRepository;
+import com.example.meetup.repository.PictureRepository;
 import com.example.meetup.repository.UserRepository;
 import com.example.meetup.service.*;
 import org.junit.jupiter.api.Assertions;
@@ -53,6 +54,8 @@ public class MeetServiceTest {
     private UserRepository mockUserRepository;
     @Mock
     private CommentRepository mockCommentRepository;
+    @Mock
+    private PictureRepository mockPictureRepository;
 
     @BeforeEach
     void setUp() {
@@ -63,7 +66,8 @@ public class MeetServiceTest {
                 mockModelMapper,
                 mockImageCloudService,
                 mockUserRepository,
-                mockCommentRepository);
+                mockCommentRepository,
+                mockPictureRepository);
     }
 
     @Test

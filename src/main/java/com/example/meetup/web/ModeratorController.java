@@ -39,14 +39,14 @@ public class ModeratorController {
     public String makeModerator(@PathVariable("id") Long userId){
         this.userService.makeModerator(userId);
 
-        return "redirect:/moderators";
+        return "redirect:/admins";
     }
 
     @GetMapping("/moderators/remove/{id}")
     public String removeModerator(@PathVariable("id") Long userId){
         this.userService.removeModerator(userId);
 
-        return "redirect:/moderators";
+        return "redirect:/";
     }
 
     @ExceptionHandler(ObjectNotFoundException.class)

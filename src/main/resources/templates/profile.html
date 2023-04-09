@@ -59,6 +59,7 @@
                   <li><h4 th:text="*{meetTitle}">Your Meet</h4><span th:text="*{description}">desc</span></li>
                   <li><h4>Date: </h4><span th:text="*{date}">--/--/----</span></li>
                   <li><div class="main-border-button"><a th:href="@{/meets/edit/{id}(id=*{id})}">Edit</a></div></li>
+                  <li><div class="main-border-button"><a th:href="@{/meets/remove/{id}(id=*{id})}">Remove</a></div></li>
                 </ul>
               </div>
             </div>

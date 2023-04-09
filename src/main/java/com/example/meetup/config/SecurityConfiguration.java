@@ -40,7 +40,7 @@ public class SecurityConfiguration{
                 // allow access to all static files (images, CSS, js)
                         requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll().
                 // the URL-s below are available for all users - logged in and anonymous
-                        requestMatchers("/", "/users/login", "/users/register", "/users/login-error", "/meets/all", "/users/account/**","/meets/details/**", "/api/**").permitAll().
+                        requestMatchers("/", "/users/login", "/users/register", "/users/login-error", "/meets/all", "/users/account/**","/meets/details/**", "/api/**", "/users/edit/**", "/meets/comments/**").permitAll().
                 // only for moderators
                         requestMatchers("/pages/moderators").hasRole(UserRoleEnum.MODERATOR.name()).
                 // only for admins
@@ -54,7 +54,7 @@ public class SecurityConfiguration{
                         usernameParameter(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_USERNAME_KEY).
                 passwordParameter(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_PASSWORD_KEY).
                 // where do we go after login
-                        defaultSuccessUrl("/").//use true argument if you always want to go there, otherwise go to previous page
+                        defaultSuccessUrl("/", true).//use true argument if you always want to go there, otherwise go to previous page
                 failureForwardUrl("/users/login-error").
                 and().logout().//configure logout
                 logoutUrl("/users/logout").

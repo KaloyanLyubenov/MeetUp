@@ -69,8 +69,10 @@
             </div>
           </div>
           <div class="row" id="main-button">
-            <div class="main-button">
-              <a href="#" id="toggle-link">Upload image</a>
+            <div sec:authorize="isAuthenticated()">
+              <div class="main-button">
+                <a href="#" id="toggle-link">Upload image</a>
+              </div>
             </div>
           </div>
             <div>

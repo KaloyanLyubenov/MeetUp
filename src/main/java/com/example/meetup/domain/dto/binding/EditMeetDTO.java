@@ -19,6 +19,7 @@ public class EditMeetDTO {
     private String meetType;
     private String vehicleType;
     private String description;
+    private String authorUsername;
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private Date date;
@@ -50,6 +51,11 @@ public class EditMeetDTO {
 
     public EditMeetDTO setDate(Date date) {
         this.date = date;
+        return this;
+    }
+
+    public EditMeetDTO setAuthorUsername(String authorUsername) {
+        this.authorUsername = authorUsername;
         return this;
     }
 }

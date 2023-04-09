@@ -16,7 +16,9 @@ import com.example.meetup.domain.enums.MeetTypeEnum;
 import com.example.meetup.domain.enums.VehicleTypeEnum;
 import com.example.meetup.repository.CommentRepository;
 import com.example.meetup.repository.MeetRepository;
+import com.example.meetup.repository.PictureRepository;
 import com.example.meetup.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -40,6 +42,7 @@ public class MeetService {
     private final ImageCloudService imageCloudService;
     private final UserRepository userRepository;
     private final CommentRepository commentRepository;
+    private final PictureRepository pictureRepository;
 
     @Autowired
     public MeetService(UserService userService,
@@ -49,7 +52,8 @@ public class MeetService {
                        ModelMapper modelMapper,
                        ImageCloudService imageCloudService,
                        UserRepository userRepository,
-                       CommentRepository commentRepository)
+                       CommentRepository commentRepository,
+                       PictureRepository pictureRepository)
     {
         this.userService = userService;
         this.meetTypeService = meetTypeService;
@@ -60,6 +64,7 @@ public class MeetService {
 
         this.userRepository = userRepository;
         this.commentRepository = commentRepository;
+        this.pictureRepository = pictureRepository;
     }
 
     public void addMeet(AddMeetDTO addMeetDTO){
@@ -159,7 +164,8 @@ public class MeetService {
                 .setMeetType(meet.getMeetType().toString())
                 .setVehicleType(meet.getVehicleType().toString())
                 .setDate(meet.getDate())
-                .setDescription(meet.getDescription());
+                .setDescription(meet.getDescription())
+                .setAuthorUsername(meet.getAnnouncer().getUsername());
     }
 
     public void editMeet(EditMeetDTO editMeetDTO){
@@ -180,10 +186,6 @@ public class MeetService {
 
     public List<MeetIndexView> getMeetsIndexViewByAnnouncerId(Long announcerId){
         List<MeetEntity> meets = this.meetRepository.findAllByAnnouncer_Id(announcerId);
-
-        if(meets.isEmpty()){
-            throw new ObjectNotFoundException(announcerId.toString(), "AnnouncerID", "List of Meets");
-        }
 
         return meets
                 .stream().map(meet -> new MeetIndexView()
@@ -216,7 +218,10 @@ public class MeetService {
 
         UserEntity user = this.modelMapper.map(this.userRepository.findById(userId), UserEntity.class);
 
-        meet = meet.removeParticipant(user);
+        List<UserEntity> participant = meet.getParticipants();
+        participant.remove(user);
+        meet.getParticipants().clear();
+        meet.setParticipants(participant);
 
         this.meetRepository.saveAndFlush(meet);
     }
@@ -235,6 +240,21 @@ public class MeetService {
         meetToSave.setComments(comments);
 
         this.meetRepository.save(meetToSave);
+    }
+
+    @Transactional
+    public void removeMeet(Long id){
+        MeetEntity meetToDelete = this.modelMapper.map(this.meetRepository.findById(id), MeetEntity.class);
+
+        this.commentRepository.deleteAll(meetToDelete.getComments());
+        meetToDelete.getComments().clear();
+        this.pictureRepository.deleteAll(meetToDelete.getPictures());
+        meetToDelete.getPictures().clear();
+
+        meetToDelete.getParticipants().clear();
+        this.meetRepository.save(meetToDelete);
+
+        this.meetRepository.delete(meetToDelete);
     }
 
 

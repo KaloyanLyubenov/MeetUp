@@ -71,7 +71,7 @@ public class MeetController {
 
     @GetMapping("/details/{id}")
     public String getMeetDetails(@PathVariable("id") Long meetId, Model model,
-                                 AddPictureDTO addPictureDTO, Principal principal, AddCommentDTO addCommentDTO){
+                                 AddPictureDTO addPictureDTO, Principal principal){
         MeetDetailsView meet = this.meetService.getMeetDetails(meetId);
         meet.setViewerParticipates(false);
 
@@ -81,11 +81,9 @@ public class MeetController {
         }
 
         addPictureDTO.setIdOfMeet(meetId);
-        addCommentDTO.setMeetId(meetId);
 
         model.addAttribute("meet", meet);
         model.addAttribute("addPictureDTO", addPictureDTO);
-        model.addAttribute("addCommentDTO", addCommentDTO);
 
         return "meet-details";
     }
@@ -108,7 +106,8 @@ public class MeetController {
     }
 
     @PostMapping("/edit/{id}")
-    public String postEditMeet(@PathVariable("id") Long meetId, @ModelAttribute(name = "editMeetModel") EditMeetDTO editMeetDTO,
+    public String postEditMeet(@PathVariable("id") Long meetId,
+                               @ModelAttribute(name = "editMeetModel") EditMeetDTO editMeetDTO,
                               BindingResult bindingResult,
                               RedirectAttributes redirectAttributes)
     {
@@ -150,6 +149,14 @@ public class MeetController {
 
         return "meet-details-comments";
     }
+
+    @GetMapping("/remove/{id}")
+    public String removeMeet(@PathVariable("id") Long meetId, Principal principal){
+        this.meetService.removeMeet(meetId);
+
+        return "redirect:/";
+    }
+
 
     @ExceptionHandler(ObjectNotFoundException.class)
     public ModelAndView onObjectNotFound(ObjectNotFoundException onfe){
