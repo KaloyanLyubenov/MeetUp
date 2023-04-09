@@ -26,7 +26,7 @@
               <div th:if="*{username == #authentication.principal.username}">
                 <div th:replace="~{fragments/account-edit-fill :: account-edit-fill-true}"></div>
               </div>
-              <div th:else>
+              <div th:if="*{username != #authentication.principal.username}">
                 <div sec:authorize="hasRole('MODERATOR')">
                   <div th:replace="~{fragments/account-edit-fill :: account-edit-fill-true}"></div>
                 </div>
